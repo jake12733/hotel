@@ -39,7 +39,7 @@
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400&family=Noto+Serif+KR:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Noto+Serif+KR:wght@200;300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 
 <!-- ═════════ NAVBAR + PROGRESS ═════════ -->
@@ -347,7 +347,7 @@
                 <button type="button" role="radio" data-bed="${b.id}" class="bed relative border px-5 py-4 text-left transition-all duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6cf9d]">
                   <span class="en block text-2xl font-light text-[#f3ead8]">${b.name}</span>
                   <span class="ko mt-1 block text-[12px] font-light leading-[1.7] text-[#f3ead8]/60">${b.desc}</span>
-                  <span class="ko mt-2 block text-sm font-medium text-[#e6cf9d]">${b.price}</span>
+                  <span class="lb mt-2 block text-sm font-medium tracking-wider text-[#e6cf9d]">${b.price}</span>
                   <span class="bed-ring absolute right-4 top-4 flex h-4 w-4 items-center justify-center rounded-full border transition-colors duration-500"><span class="bed-dot h-2 w-2 rounded-full bg-[#c9a96a] transition-opacity duration-500"></span></span>
                 </button>`).join('')}
             </div>
@@ -359,7 +359,7 @@
           <div class="flex flex-col gap-4 border-t border-[#c9a96a]/25 pt-6">
             <div class="flex items-center justify-between border border-[#c9a96a]/40 bg-[#c9a96a]/5 px-6 py-4">
               <span class="lb text-[11px] uppercase tracking-[0.3em] text-[#c9a96a]">Selected Rate</span>
-              <span id="price-display" class="en text-xl font-light text-[#f3ead8]"></span>
+              <span id="price-display" class="lb text-lg font-light tracking-wide text-[#f3ead8]"></span>
             </div>
             <a href="#suites" id="cta" class="group relative overflow-hidden border border-[#c9a96a]/70 py-4 text-center text-[#f3ead8] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(201,169,106,0.45)]">
               <span class="absolute inset-0 translate-y-full bg-gradient-to-r from-[#c9a96a] to-[#e6cf9d] transition-transform duration-700 ease-out group-hover:translate-y-0"></span>
