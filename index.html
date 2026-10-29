@@ -252,7 +252,7 @@
   </div>
 </section>
 
-<!-- ═════════ 상세 모달 (가격 숫자만 명확하게 Cormorant Garamond 폰트 적용) ═════════ -->
+<!-- ═════════ 상세 모달 (가격 폰트 분리 적용 완료) ═════════ -->
 <div id="modal" hidden>
   <div id="backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeModal()"></div>
   <div id="panel" class="panel relative grid max-h-full w-full max-w-6xl grid-cols-1 overflow-y-auto border border-[#c9a96a]/30 bg-[#121110] shadow-[0_30px_120px_rgba(0,0,0,0.8)] md:max-h-[92vh] md:grid-cols-[1.05fr_1fr] md:overflow-hidden" role="dialog" aria-modal="true">
@@ -301,8 +301,8 @@
       <div class="mt-10 border-t border-[#c9a96a]/20 pt-6 flex items-center justify-between">
         <div>
           <span class="block lb text-[9px] uppercase tracking-[0.3em] text-[#c9a96a]">TOTAL RATE</span>
-          <!-- 가격 숫자 부분만 폰트 적용을 위해 span으로 감싸고 en 클래스 부여 -->
-          <div class="text-2xl text-[#f3ead8]"><span id="modal-price" class="en font-normal"></span></div>
+          <!-- 가격 숫자 영역과 단위를 분리하여 en 클래스로 폰트 적용 -->
+          <div id="modal-price" class="text-2xl text-[#f3ead8]"></div>
         </div>
         <button onclick="alert('예약 프로세스로 이동합니다.'); closeModal();" class="lb group relative overflow-hidden border border-[#c9a96a] px-8 py-3.5 text-[11px] uppercase tracking-[0.35em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
           <span class="absolute inset-0 translate-y-full bg-[#c9a96a] transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
@@ -524,7 +524,12 @@
   }
 
   function updatePrice() {
-    $('#modal-price').textContent = currentBed.price;
+    // 가격 문자열에서 숫자 부분과 '/ 박' 단위를 분리하여 렌더링
+    const parts = currentBed.price.split(' '); // ['₩1,280,000', '/', '박']
+    const priceNum = parts[0]; // '₩1,280,000'
+    const priceUnit = parts.slice(1).join(' '); // '/ 박'
+    
+    $('#modal-price.text-2xl').innerHTML = `<span class="en">${priceNum}</span> <span class="ko text-sm opacity-80">${priceUnit}</span>`;
   }
 </script>
 </body>
