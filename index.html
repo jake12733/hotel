@@ -130,15 +130,24 @@
   </div>
 </section>
 
-<!-- ═════════ DINING (각 아이템별 맞춤 이미지 적용) ═════════ -->
+<!-- ═════════ DINING (좌측 인트로 영역 배경 이미지 적용 완료) ═════════ -->
 <section id="dining" class="bg-[#1a1816] px-6 py-28 md:px-10 md:py-40">
-  <div class="mx-auto grid max-w-7xl gap-16 md:grid-cols-12">
-    <div class="md:col-span-5">
-      <div class="rv lb flex items-center gap-4"><span class="h-px w-10 bg-[#c9a96a]"></span><span class="text-[11px] uppercase tracking-[0.4em] text-[#c9a96a]">Dining</span></div>
-      <h2 class="rv en mt-8 text-5xl font-light leading-[1.1] text-[#f3ead8] md:text-7xl" style="transition-delay:.12s">A Table <em class="text-[#e6cf9d]">Set for Memory</em></h2>
-      <p class="rv ko mt-8 max-w-md text-sm font-light leading-[2.1] text-[#f3ead8]/60" style="transition-delay:.25s">미식은 가장 오래 남는 기억입니다. 벨루체의 세 공간에서 각기 다른 시간의 맛을 만나보세요.</p>
-      <a href="#reserve" class="rv lb group mt-10 inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.4em] text-[#c9a96a]" style="transition-delay:.35s">Reserve a Table<span class="block h-px w-10 bg-[#c9a96a] transition-all duration-700 group-hover:w-20"></span></a>
+  <div class="mx-auto grid max-w-7xl gap-16 md:grid-cols-12 items-center">
+    
+    <!-- 좌측 타이틀 영역 (요청하신 pexels-krishna-agrawal-1042874323-26673869.jpg 배경 적용) -->
+    <div class="md:col-span-5 relative overflow-hidden border border-[#c9a96a]/20 p-8 md:p-12 rounded-sm shadow-2xl">
+      <img src="pexels-krishna-agrawal-1042874323-26673869.jpg" alt="Dining Background" class="absolute inset-0 h-full w-full object-cover opacity-25">
+      <div class="absolute inset-0 bg-gradient-to-b from-[#1a1816]/95 via-[#1a1816]/90 to-[#1a1816]/95"></div>
+      
+      <div class="relative z-10">
+        <div class="rv lb flex items-center gap-4"><span class="h-px w-10 bg-[#c9a96a]"></span><span class="text-[11px] uppercase tracking-[0.4em] text-[#c9a96a]">Dining</span></div>
+        <h2 class="rv en mt-8 text-4xl font-light leading-[1.1] text-[#f3ead8] md:text-6xl" style="transition-delay:.12s">A Table <em class="text-[#e6cf9d]">Set for Memory</em></h2>
+        <p class="rv ko mt-8 text-sm font-light leading-[2.1] text-[#f3ead8]/70" style="transition-delay:.25s">미식은 가장 오래 남는 기억입니다. 벨루체의 세 공간에서 각기 다른 시간의 맛을 만나보세요.</p>
+        <a href="#reserve" class="rv lb group mt-10 inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.4em] text-[#c9a96a]" style="transition-delay:.35s">Reserve a Table<span class="block h-px w-10 bg-[#c9a96a] transition-all duration-700 group-hover:w-20"></span></a>
+      </div>
     </div>
+
+    <!-- 우측 다이닝 리스트 (각 아이템별 맞춤 이미지 적용) -->
     <div class="md:col-span-7 flex flex-col gap-6">
       
       <!-- 1. Maison Dorée -->
