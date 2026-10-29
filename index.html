@@ -116,7 +116,7 @@
       </div>
     </div>
 
-    <!-- 복도 사진 아래에 곧바로 이어지는 Signature Suites 카드 세팅 -->
+    <!-- 복도 사진 아래에 이어지는 Signature Suites 카드 세팅 -->
     <div class="mt-28 md:mt-36">
       <div class="rv lb flex items-center gap-4">
         <span class="h-px w-10 bg-[#c9a96a]"></span>
@@ -244,7 +244,7 @@
     </div>
 
     <div class="rv mt-10" style="transition-delay:.4s">
-      <button onclick="openModal()" class="lb group relative overflow-hidden border border-[#c9a96a] px-12 py-4 text-[12px] uppercase tracking-[0.4em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
+      <button onclick="openModal('grand-penthouse')" class="lb group relative overflow-hidden border border-[#c9a96a] px-12 py-4 text-[12px] uppercase tracking-[0.4em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
         <span class="absolute inset-0 translate-y-full bg-[#c9a96a] transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
         <span class="relative z-10">Proceed to Secure Booking</span>
       </button>
@@ -252,13 +252,13 @@
   </div>
 </section>
 
-<!-- ═════════ MODAL & FOOTER ═════════ -->
+<!-- ═════════ 상세 모달 ═════════ -->
 <div id="modal" hidden>
   <div id="backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeModal()"></div>
   <div id="panel" class="panel relative grid max-h-full w-full max-w-6xl grid-cols-1 overflow-y-auto border border-[#c9a96a]/30 bg-[#121110] shadow-[0_30px_120px_rgba(0,0,0,0.8)] md:max-h-[92vh] md:grid-cols-[1.05fr_1fr] md:overflow-hidden" role="dialog" aria-modal="true">
     <div class="p-8 md:p-12">
       <div class="flex items-center justify-between border-b border-[#c9a96a]/20 pb-4">
-        <span class="lb text-xs uppercase tracking-[0.4em] text-[#c9a96a]">Reservation Details</span>
+        <span class="lb text-xs uppercase tracking-[0.4em] text-[#c9a96a]">Suite Details</span>
         <button onclick="closeModal()" class="text-[#f3ead8] text-xl">&times;</button>
       </div>
       <div id="modal-content" class="mt-6 space-y-4 ko text-sm text-[#f3ead8]/80"></div>
@@ -332,21 +332,38 @@
     }
   ];
 
-  // 스위트룸 카드 동적 생성 렌더링
-  const cardsContainer = document.getElementById('cards');
-  if(cardsContainer) {
-    cardsContainer.innerHTML = SUITES.map((suite, idx) => `
-      <div onclick="openModal('${suite.id}')" class="rv group relative overflow-hidden border border-[#c9a96a]/20 aspect-[4/5] cursor-pointer" style="transition-delay:${idx * 0.15}s">
-        <img src="${suite.images[0].src}" alt="${suite.nameEn}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
-        <div class="absolute bottom-8 left-8 right-8 z-10 flex flex-col justify-end h-full">
-          <span class="lb text-[10px] uppercase tracking-[0.4em] text-[#c9a96a]">${suite.beds[0].price}</span>
-          <h3 class="en mt-2 text-3xl font-light text-[#f3ead8]">${suite.nameEn}</h3>
-          <p class="ko mt-2 text-xs font-light text-[#f3ead8]/70 line-clamp-2">${suite.concept}</p>
+  let currentSuite = SUITES[0];
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  /* ── 카드 렌더링 ── */
+  $('#cards').innerHTML = SUITES.map((suite, index) => `
+    <div class="rv" style="transition-delay:${index * 0.15}s">
+      <article data-suite-id="${suite.id}" role="button" tabindex="0" aria-label="${suite.nameKo} 상세 보기"
+        class="group relative cursor-pointer overflow-hidden border border-[#c9a96a]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6cf9d]">
+        <div class="relative aspect-[3/4] overflow-hidden">
+          <img src="${suite.images[0].src}" alt="${suite.nameKo} 대표 이미지" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.07]">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10"></div>
+          <div class="absolute inset-x-0 bottom-0 p-7">
+            <div class="lb text-[10px] uppercase tracking-[0.4em] text-[#c9a96a]">${suite.tags.join(' · ')}</div>
+            <h3 class="ko mt-3 text-3xl font-light text-[#f3ead8]">${suite.nameKo}</h3>
+            <p class="en text-xl italic text-[#e6cf9d]">${suite.nameEn}</p>
+            <div class="mt-5 flex items-center justify-between border-t border-[#c9a96a]/25 pt-4">
+              <span class="lb text-[11px] font-light tracking-[0.25em] text-[#f3ead8]/60">VIEW DETAILS</span>
+              <span class="text-[#c9a96a] transition-transform duration-500 group-hover:translate-x-1.5">→</span>
+            </div>
+          </div>
         </div>
-      </div>
-    `).join('');
-  }
+      </article>
+    </div>`).join('');
+
+  // 카드 클릭 시 모달 열기 이벤트 바인딩
+  $$('#cards article').forEach(article => {
+    article.addEventListener('click', () => {
+      const suiteId = article.getAttribute('data-suite-id');
+      openModal(suiteId);
+    });
+  });
 
   // 스크롤 애니메이션 및 프로그레스 바
   window.addEventListener('scroll', () => {
@@ -392,22 +409,24 @@
   function openModal(suiteId = 'grand-penthouse') {
     const modal = document.getElementById('modal');
     const content = document.getElementById('modal-content');
-    const suite = SUITES.find(s => s.id === suiteId) || SUITES[2];
+    currentSuite = SUITES.find(s => s.id === suiteId) || SUITES[0];
     
-    content.innerHTML = `
-      <h3 class="en text-2xl text-[#e6cf9d]">${suite.nameKo} (${suite.nameEn})</h3>
-      <p class="text-xs text-[#f3ead8]/70">${suite.concept}</p>
-      <div class="border border-[#c9a96a]/20 p-4 bg-black/50">
-        <p class="lb text-xs uppercase text-[#c9a96a]">기본 요금 및 구성</p>
-        <p class="mt-1 en text-lg text-[#f3ead8]">${suite.beds[0].price}</p>
-      </div>
-      <div class="space-y-2">
-        <p class="lb text-xs uppercase text-[#c9a96a]">포함 사항</p>
-        <ul class="list-disc list-inside text-xs text-[#f3ead8]/70 space-y-1">
-          ${suite.included.map(inc => `<li>${inc}</li>`).join('')}
-        </ul>
-      </div>
-    `;
+    if(content) {
+      content.innerHTML = `
+        <h3 class="en text-2xl text-[#e6cf9d]">${currentSuite.nameKo} (${currentSuite.nameEn})</h3>
+        <p class="text-xs text-[#f3ead8]/70">${currentSuite.concept}</p>
+        <div class="border border-[#c9a96a]/20 p-4 bg-black/50">
+          <p class="lb text-xs uppercase text-[#c9a96a]">기본 요금 및 구성</p>
+          <p class="mt-1 en text-lg text-[#f3ead8]">${currentSuite.beds[0].price}</p>
+        </div>
+        <div class="space-y-2">
+          <p class="lb text-xs uppercase text-[#c9a96a]">포함 사항</p>
+          <ul class="list-disc list-inside text-xs text-[#f3ead8]/70 space-y-1">
+            ${currentSuite.included.map(inc => `<li>${inc}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
     modal.removeAttribute('hidden');
     setTimeout(() => modal.classList.add('on'), 10);
   }
