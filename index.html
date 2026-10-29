@@ -590,5 +590,150 @@
     $('#modal-price-unit').textContent = currentBed.priceUnit;
   }
 </script>
+
+<style id="belluce-mobile-responsive">
+/* Mobile-specific art direction: retain desktop layout, redesign spacing and controls on small screens. */
+@media (max-width: 767px) {
+  html { scroll-padding-top: 76px; }
+  body { overflow-x: clip; -webkit-text-size-adjust: 100%; }
+  section { scroll-margin-top: 68px; }
+
+  /* Compact, readable mobile header */
+  #nav { padding-top: max(12px, env(safe-area-inset-top)); padding-bottom: 12px; }
+  #nav nav { display: flex; justify-content: flex-end; padding-left: 16px; padding-right: 16px; min-height: 42px; }
+  #nav nav > ul { display: none !important; }
+  #nav-logo {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    align-items: flex-start;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    max-width: calc(100% - 118px);
+  }
+  #nav-logo > span:first-child { font-size: 17px; letter-spacing: .28em; padding-left: .28em !important; }
+  #nav-logo > span:last-child { font-size: 6px; letter-spacing: .22em; padding-left: .22em !important; white-space: nowrap; }
+  #nav nav > div { margin-left: auto; }
+  #nav nav > div a { padding: 10px 13px; font-size: 10px; letter-spacing: .2em; }
+
+  /* Hero becomes a taller, portrait-first composition */
+  #top { height: 100svh; min-height: 620px; }
+  #top > div.relative.z-20 { padding: 84px 22px 100px; }
+  #top > div.relative.z-20 > div:first-child { top: 78px; }
+  #top > div.relative.z-20 > div:first-child > span:first-child { font-size: 25px; letter-spacing: .38em; padding-left: .38em !important; }
+  #top > div.relative.z-20 > div:first-child > span:last-child { font-size: 7px; letter-spacing: .34em; padding-left: .34em !important; }
+  #top h1 { font-size: clamp(34px, 9vw, 46px); line-height: 1.28; letter-spacing: .035em; }
+  #top p.ko { max-width: 300px; font-size: 13px; line-height: 1.9; letter-spacing: .08em; }
+  #top .gap-9 { gap: 24px; }
+  #top > div.relative.z-20 > div:last-child { bottom: max(28px, env(safe-area-inset-bottom)); }
+  #top > div.relative.z-20 > div:last-child a { padding: 13px 26px; }
+
+  /* Reduce oversized desktop whitespace while preserving the editorial feel */
+  #suites { padding: 76px 18px; }
+  #suites .mt-10 { margin-top: 22px; }
+  #suites h2 { font-size: clamp(29px, 7.8vw, 38px); line-height: 1.32; }
+  #suites p.ko { font-size: 13px; line-height: 1.95; }
+  #suites .mt-20 { margin-top: 36px; }
+  #suites .mt-28 { margin-top: 64px; }
+  #suites .mt-16 { margin-top: 28px; }
+  #cards { gap: 18px; margin-top: 28px; }
+  #cards article > div { aspect-ratio: 4 / 4.6; }
+  #cards article h3 { font-size: 25px; }
+  #cards article .p-7 { padding: 20px; }
+  #cards article .tracking-\[0\.4em\] { letter-spacing: .2em; }
+
+  #dining { padding: 72px 18px; }
+  #dining > div { gap: 28px; }
+  #dining > div > div:first-child { padding: 26px 22px; }
+  #dining h2 { font-size: clamp(31px, 8vw, 40px); line-height: 1.2; }
+  #dining .md\:col-span-7 { gap: 14px; }
+  #dining .md\:col-span-7 > div { padding: 23px 20px; }
+  #dining .md\:col-span-7 h3 { font-size: 27px; line-height: 1.2; }
+  #dining .md\:col-span-7 p { font-size: 12px; line-height: 1.8; }
+  #dining .tracking-\[0\.4em\] { letter-spacing: .2em; }
+
+  #experience { padding: 72px 18px; }
+  #experience h2 { font-size: 38px; }
+  #experience .mt-16 { margin-top: 28px; }
+  #experience .group { min-height: 0; }
+  #experience .group:first-child { min-height: 390px; }
+  #experience .group:nth-child(2),
+  #experience .group:nth-child(3) { min-height: 210px; }
+  #experience .group:nth-child(4) { min-height: 230px; }
+  #experience .group h3 { font-size: 31px; line-height: 1.2; }
+  #experience .group .bottom-8 { bottom: 22px; left: 20px; right: 20px; }
+  #experience .group .px-7 { padding-left: 21px; padding-right: 21px; }
+
+  /* Reservation becomes a compact, single-column booking panel */
+  #reserve { padding: 76px 18px; }
+  #reserve .grid.items-center { gap: 36px; }
+  #reserve h2 { font-size: clamp(43px, 12vw, 56px); line-height: 1.04; }
+  #reserve .mt-8 { margin-top: 20px; }
+  #reserve .mt-12 { margin-top: 28px; }
+  #reserve .rv.relative > .absolute.-inset-3 { inset: -5px; }
+  #reserve .rv.relative > .relative { padding: 22px 18px; }
+  #reserve .rv.relative > .relative > .flex.items-start.justify-between { padding-bottom: 20px; }
+  #reserve .rv.relative > .relative > .flex.items-start.justify-between > span { font-size: 25px; }
+  #reserve .mt-7.space-y-5 { margin-top: 22px; gap: 13px; }
+  #reserve .mt-7.space-y-5 > div { padding: 16px 14px; }
+  #reserve #res-suite, #reserve #res-date { font-size: 13px; min-height: 42px; }
+  #reserve #res-price { font-size: 28px; }
+  #reserve button.group { padding: 16px 17px; gap: 12px; }
+  #reserve button.group .ko { font-size: 14px; }
+
+  /* Room details modal becomes a full-screen mobile sheet */
+  #modal { align-items: stretch; justify-content: stretch; padding: 0; }
+  #modal .panel {
+    display: flex !important;
+    flex-direction: column;
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-left: 0;
+    border-right: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    -webkit-overflow-scrolling: touch;
+  }
+  #modal .panel > div:first-child { position: relative; flex: 0 0 31svh; min-height: 220px; max-height: 300px; }
+  #modal .panel > div:first-child > div:last-child { padding: 14px; gap: 8px; flex-wrap: wrap; }
+  #modal #slide-caption { font-size: 11px; letter-spacing: .08em; }
+  #modal .panel > div:nth-child(2) {
+    overflow: visible;
+    max-height: none;
+    padding: 25px 20px calc(24px + env(safe-area-inset-bottom));
+    gap: 26px;
+  }
+  #modal .panel > div:nth-child(2) > button[aria-label="모달 닫기"] { top: 14px; right: 14px; padding: 9px 11px; background: rgba(0,0,0,.55); }
+  #modal #modal-tags { padding-right: 38px; font-size: 9px; letter-spacing: .2em; }
+  #modal #modal-title { padding-right: 24px; font-size: 26px; }
+  #modal #modal-beds { grid-template-columns: 1fr; gap: 9px; }
+  #modal #modal-beds button { padding: 13px; }
+  #modal #modal-included, #modal #modal-perks { font-size: 12px; line-height: 1.8; }
+  #modal .panel > div:nth-child(2) > div:last-child { margin-top: 24px; padding-top: 20px; gap: 14px; align-items: center; }
+  #modal #modal-price-num { font-size: 21px; }
+  #modal .panel > div:nth-child(2) > div:last-child > button { padding: 13px 18px; letter-spacing: .18em; white-space: nowrap; }
+
+  footer { padding: 34px 18px; }
+  footer p:first-child { font-size: 10px; letter-spacing: .15em; }
+  footer p:last-child { font-size: 11px; line-height: 1.8; }
+
+  /* Better touch feedback and prevent hover-only styling from affecting taps */
+  a, button, select, input { -webkit-tap-highlight-color: rgba(201,169,106,.18); }
+  button, a { touch-action: manipulation; }
+}
+
+@media (max-width: 380px) {
+  #nav-logo > span:first-child { font-size: 15px; }
+  #nav-logo > span:last-child { font-size: 5px; }
+  #nav nav > div a { padding: 9px 10px; font-size: 9px; }
+  #top h1 { font-size: 32px; }
+  #reserve .rv.relative > .relative { padding-left: 15px; padding-right: 15px; }
+  #modal .panel > div:nth-child(2) { padding-left: 16px; padding-right: 16px; }
+}
+</style>
+
 </body>
 </html>
