@@ -309,9 +309,9 @@
             <span id="modal-price-unit" class="ko text-sm opacity-80"></span>
           </div>
         </div>
-        <button onclick="alert('예약 프로세스로 이동합니다.'); closeModal();" class="lb group relative overflow-hidden border border-[#c9a96a] px-8 py-3.5 text-[11px] uppercase tracking-[0.35em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
+        <button onclick="document.getElementById('res-suite').value = currentSuite.id; closeModal(); document.getElementById('reserve').scrollIntoView({ behavior: 'smooth', block: 'start' });" class="lb group relative overflow-hidden border border-[#c9a96a] px-8 py-3.5 text-[11px] uppercase tracking-[0.35em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
           <span class="absolute inset-0 translate-y-full bg-[#c9a96a] transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
-          <span class="relative z-10">Reserve This Suite</span>
+          <span class="relative z-10">예약하기</span>
         </button>
       </div>
     </div>
