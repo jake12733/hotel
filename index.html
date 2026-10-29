@@ -252,7 +252,7 @@
   </div>
 </section>
 
-<!-- ═════════ 상세 모달 (가격 폰트양식 뚜렷하게 수정 반영) ═════════ -->
+<!-- ═════════ 상세 모달 (가격 폰트만 선명한 서체로 변경, 크기는 기존 유지) ═════════ -->
 <div id="modal" hidden>
   <div id="backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeModal()"></div>
   <div id="panel" class="panel relative grid max-h-full w-full max-w-6xl grid-cols-1 overflow-y-auto border border-[#c9a96a]/30 bg-[#121110] shadow-[0_30px_120px_rgba(0,0,0,0.8)] md:max-h-[92vh] md:grid-cols-[1.05fr_1fr] md:overflow-hidden" role="dialog" aria-modal="true">
@@ -300,9 +300,9 @@
 
       <div class="mt-10 border-t border-[#c9a96a]/20 pt-6 flex items-center justify-between">
         <div>
-          <span class="block lb text-[10px] uppercase tracking-[0.35em] text-[#c9a96a]">TOTAL RATE</span>
-          <!-- 가격 글자 양식을 뚜렷하게 수정 (Cormorant Garamond 폰트, 적절한 두께 및 선명한 색상 적용) -->
-          <span id="modal-price" class="en text-3xl font-normal tracking-wide text-[#f3ead8]" style="text-shadow: 0 2px 10px rgba(0,0,0,0.5);"></span>
+          <span class="block lb text-[9px] uppercase tracking-[0.3em] text-[#c9a96a]">TOTAL RATE</span>
+          <!-- 글자 크기는 기존 크기(text-2xl) 유지, 폰트 양식만 뚜렷한 Cormorant Garamond 서체 적용 -->
+          <span id="modal-price" class="en text-2xl font-normal tracking-wide text-[#f3ead8]" style="text-shadow: 0 1px 8px rgba(0,0,0,0.4);"></span>
         </div>
         <button onclick="alert('예약 프로세스로 이동합니다.'); closeModal();" class="lb group relative overflow-hidden border border-[#c9a96a] px-8 py-3.5 text-[11px] uppercase tracking-[0.35em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
           <span class="absolute inset-0 translate-y-full bg-[#c9a96a] transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
