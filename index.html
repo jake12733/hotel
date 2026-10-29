@@ -252,9 +252,9 @@
   </div>
 </section>
 
-<!-- ═════════ 상세 모달 (이미지 슬라이드 및 상세정보 완벽 복원) ═════════ -->
+<!-- ═════════ 상세 모달 (좌측 이미지 슬라이드 + 우측 상세정보 완벽 결합) ═════════ -->
 <div id="modal" hidden>
-  <div id="backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md"></div>
+  <div id="backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeModal()"></div>
   <div id="panel" class="panel relative grid max-h-full w-full max-w-6xl grid-cols-1 overflow-y-auto border border-[#c9a96a]/30 bg-[#121110] shadow-[0_30px_120px_rgba(0,0,0,0.8)] md:max-h-[92vh] md:grid-cols-[1.05fr_1fr] md:overflow-hidden" role="dialog" aria-modal="true">
     
     <!-- 좌측 이미지 슬라이드 영역 -->
@@ -262,7 +262,7 @@
       <div id="modal-slides" class="absolute inset-0 h-full w-full"></div>
       <div class="absolute inset-x-0 bottom-0 z-20 flex items-center justify-between p-6 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
         <div class="flex items-center gap-3">
-          <button onclick="prevSlide()" class="border border-[#c9a96a]/40 p-2.5 text-[#f3ead8] transition-colors hover:border-[#c9a96a] hover:bg-[#c9a96a]/1il" aria-label="이전 이미지">←</button>
+          <button onclick="prevSlide()" class="border border-[#c9a96a]/40 p-2.5 text-[#f3ead8] transition-colors hover:border-[#c9a96a] hover:bg-[#c9a96a]/10" aria-label="이전 이미지">←</button>
           <button onclick="nextSlide()" class="border border-[#c9a96a]/40 p-2.5 text-[#f3ead8] transition-colors hover:border-[#c9a96a] hover:bg-[#c9a96a]/10" aria-label="다음 이미지">→</button>
         </div>
         <div id="slide-caption" class="en text-sm tracking-[0.2em] text-[#f3ead8]/90"></div>
