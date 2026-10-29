@@ -1,0 +1,81 @@
+// LumiereHero.jsx — 로컬 비디오 배경 히어로 (React + Tailwind CSS)
+//
+// 준비: 영상 파일을 프로젝트의 public/hotel-bg.mp4 로 저장하세요.
+//       (Vite·CRA·Next.js 모두 public 폴더 파일은 "/hotel-bg.mp4" 로 접근됩니다)
+
+import { useEffect, useRef } from "react";
+
+export default function LumiereHero() {
+  const videoRef = useRef(null);
+
+  // React의 muted 속성 누락 이슈 보정 + 자동재생 재시도
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.play().catch(() => {});
+  }, []);
+
+  return (
+    <section id="top" className="relative w-full h-screen overflow-hidden bg-black">
+      {/* 1. 로컬 비디오 배경 */}
+      <video
+        ref={videoRef}
+        src="/hotel-bg.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+      />
+
+      {/* 2. 반투명 다크 오버레이 (비디오 바로 위) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/70 z-10" />
+
+      {/* 3. 컨텐츠: 정중앙 배치 */}
+      <div className="relative z-20 flex h-full flex-col items-center justify-center px-4 text-center">
+        <p
+          className="hero-fade mb-6 text-xs uppercase tracking-[0.5em] text-[#c9a96a]"
+          style={{ animationDelay: "0.2s" }}
+        >
+          Grand Hotel &amp; Residences
+        </p>
+
+        <h1
+          className="hero-fade font-serif text-6xl font-light tracking-[0.3em] text-[#f3ead8] md:text-8xl"
+          style={{ animationDelay: "0.5s" }}
+        >
+          LUMIÈRE
+        </h1>
+
+        <p
+          className="hero-fade mt-6 font-serif text-2xl italic text-[#e6cf9d] md:text-4xl"
+          style={{ animationDelay: "0.9s" }}
+        >
+          A Symphony of Time and Space
+        </p>
+
+        <a
+          href="#reserve"
+          className="hero-fade mt-12 border border-[#c9a96a] bg-[#c9a96a] px-10 py-4 text-xs uppercase tracking-[0.4em] text-black transition-all duration-500 hover:bg-transparent hover:text-[#e6cf9d] hover:shadow-[0_0_40px_rgba(201,169,106,0.5)]"
+          style={{ animationDelay: "1.3s" }}
+        >
+          Book Your Stay
+        </a>
+      </div>
+
+      {/* 페이드업 애니메이션 (의존성 없이 CSS만 사용) */}
+      <style>{`
+        @keyframes heroFadeUp {
+          from { opacity: 0; transform: translateY(32px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .hero-fade {
+          opacity: 0;
+          animation: heroFadeUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+      `}</style>
+    </section>
+  );
+}
