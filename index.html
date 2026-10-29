@@ -301,8 +301,8 @@
       <div class="mt-10 border-t border-[#c9a96a]/20 pt-6 flex items-center justify-between">
         <div>
           <span class="block lb text-[9px] uppercase tracking-[0.3em] text-[#c9a96a]">TOTAL RATE</span>
-          <!-- 가격 숫자 영역과 단위를 분리하여 en 클래스로 폰트 적용 -->
-          <div id="modal-price" class="text-2xl text-[#f3ead8]"></div>
+          <!-- 가격 숫자 영역(en 클래스)과 단위 영역(ko 클래스)을 완벽하게 분리 -->
+          <div class="text-2xl text-[#f3ead8]"><span id="modal-price-num" class="en"></span> <span id="modal-price-unit" class="ko text-sm opacity-80"></span></div>
         </div>
         <button onclick="alert('예약 프로세스로 이동합니다.'); closeModal();" class="lb group relative overflow-hidden border border-[#c9a96a] px-8 py-3.5 text-[11px] uppercase tracking-[0.35em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
           <span class="absolute inset-0 translate-y-full bg-[#c9a96a] transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
@@ -336,8 +336,8 @@
         { src: 'pexels-thiha-soe-2746200-5883736.jpg', ko: '럭셔리 욕실', en: 'Bathroom' }
       ],
       beds: [
-        { id: 'king', name: 'King Bed', desc: '킹 사이즈 프리미엄 매트리스', price: '₩450,000 / 박' },
-        { id: 'twin', name: 'Twin Beds', desc: '싱글 프리미엄 베드 2개 구성', price: '₩490,000 / 박' }
+        { id: 'king', name: 'King Bed', desc: '킹 사이즈 프리미엄 매트리스', priceNum: '₩450,000', priceUnit: '/ 박' },
+        { id: 'twin', name: 'Twin Beds', desc: '싱글 프리미엄 베드 2개 구성', priceNum: '₩490,000', priceUnit: '/ 박' }
       ],
       included: ['프라이빗 키카드 시스템 및 24시간 프론트 데스크 케어', '하이엔드 어메니티 및 미니바 기본 제공'],
       perks: ['프리미엄 피트니스 센터(헬스장) 상시 무료 이용', '럭셔리 사우나 1일 1회 이용권 포함']
@@ -354,8 +354,8 @@
         { src: 'pexels-alley-chien-2150148608-35747331.jpg', ko: '스위트 욕실', en: 'Suite Bathroom' }
       ],
       beds: [
-        { id: 'king', name: 'California King', desc: '최상급 캘리포니아 킹 사이즈 침대', price: '₩780,000 / 박' },
-        { id: 'twin', name: 'Executive Twin', desc: '프리미엄 트윈 베드 구성', price: '₩830,000 / 박' }
+        { id: 'king', name: 'California King', desc: '최상급 캘리포니아 킹 사이즈 침대', priceNum: '₩780,000', priceUnit: '/ 박' },
+        { id: 'twin', name: 'Executive Twin', desc: '프리미엄 트윈 베드 구성', priceNum: '₩830,000', priceUnit: '/ 박' }
       ],
       included: ['전담 버틀러 익스프레스 체크인 및 발렛 파킹 무료', '이그제큐티브 라운지 올데이 조식 및 애프터눈 티 무료 이용'],
       perks: ['시그니처 스파 트리트먼트 2인 할인 혜택', '프라이빗 미팅룸 및 비즈니스 센터 이용권']
@@ -372,8 +372,8 @@
         { src: 'pexels-edithubpro-18285947.jpg', ko: '마스터 침실', en: 'Master Bedroom' }
       ],
       beds: [
-        { id: 'king', name: 'Emperor King', desc: '최상급 황제 사이즈 맞춤형 매트리스', price: '₩1,280,000 / 박' },
-        { id: 'suite', name: 'Dual Suite King', desc: '듀얼 마스터 침실 풀패키지 구성', price: '₩1,450,000 / 박' }
+        { id: 'king', name: 'Emperor King', desc: '최상급 황제 사이즈 맞춤형 매트리스', priceNum: '₩1,280,000', priceUnit: '/ 박' },
+        { id: 'suite', name: 'Dual Suite King', desc: '듀얼 마스터 침실 풀패키지 구성', priceNum: '₩1,450,000', priceUnit: '/ 박' }
       ],
       included: ['공항 픽업 & 샌딩 전용 리무진 서비스 무상 제공', '24시간 전담 프라이빗 버틀러 및 셰프 서비스'],
       perks: ['루프탑 인피니티 풀 및 VIP 라운지 프리패스', '하이엔드 샴페인 & 캐비어 웰컴 세트 증정']
@@ -524,10 +524,8 @@
   }
 
   function updatePrice() {
-    const parts = currentBed.price.split(' ');
-    const priceNum = parts[0];
-    const priceUnit = parts.slice(1).join(' ');
-    $('#modal-price').innerHTML = `<span class="en">${priceNum}</span> <span class="ko text-sm opacity-80">${priceUnit}</span>`;
+    $('#modal-price-num').textContent = currentBed.priceNum;
+    $('#modal-price-unit').textContent = currentBed.priceUnit;
   }
 </script>
 </body>
