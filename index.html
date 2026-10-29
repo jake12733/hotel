@@ -232,8 +232,8 @@
         { src: 'pexels-thiha-soe-2746200-5883736.jpg', ko: '럭셔리 욕실', en: 'Bathroom' }
       ],
       beds: [
-        { id: 'king', name: 'King Bed', desc: '킹 사이즈 프리미엄 매트리스' },
-        { id: 'twin', name: 'Twin Beds', desc: '싱글 프리미엄 베드 2개 구성' }
+        { id: 'king', name: 'King Bed', desc: '킹 사이즈 프리미엄 매트리스', price: '₩450,000 / 박' },
+        { id: 'twin', name: 'Twin Beds', desc: '싱글 프리미엄 베드 2개 구성', price: '₩490,000 / 박' }
       ],
       included: ['프라이빗 키카드 시스템 및 24시간 프론트 데스크 케어', '하이엔드 어메니티 및 미니바 기본 제공'],
       perks: ['프리미엄 피트니스 센터(헬스장) 상시 무료 이용', '럭셔리 사우나 1일 1회 이용권 포함']
@@ -245,12 +245,13 @@
       concept: '탁 트인 파노라믹 뷰와 독립된 리빙 공간을 갖춘 하이엔드 스위트',
       tags: ['파노라믹 뷰', '분리형 거실', '코너 스위트'],
       images: [
-        { src: 'pexels-misbaa-eri-426041722-37252339.jpg', ko: '프리미어 거실', en: 'Living Room' },
         { src: 'pexels-quang-nguyen-vinh-222549-14021931.jpg', ko: '마스터 침실', en: 'Master Bedroom' },
+        { src: 'pexels-misbaa-eri-426041722-37252339.jpg', ko: '프리미어 거실', en: 'Living Room' },
         { src: 'pexels-alley-chien-2150148608-35747331.jpg', ko: '스위트 욕실', en: 'Suite Bathroom' }
       ],
       beds: [
-        { id: 'king', name: 'California King', desc: '최상급 캘리포니아 킹 사이즈 침대' }
+        { id: 'king', name: 'California King', desc: '최상급 캘리포니아 킹 사이즈 침대', price: '₩780,000 / 박' },
+        { id: 'twin', name: 'Executive Twin', desc: '프리미엄 트윈 베드 구성', price: '₩830,000 / 박' }
       ],
       included: ['전담 버틀러 익스프레스 체크인 및 발렛 파킹 무료', '이그제큐티브 라운지 올데이 조식 및 애프터눈 티 무료 이용'],
       perks: ['시그니처 스파 트리트먼트 2인 할인 혜택', '프라이빗 미팅룸 및 비즈니스 센터 이용권']
@@ -346,19 +347,28 @@
                 <button type="button" role="radio" data-bed="${b.id}" class="bed relative border px-5 py-4 text-left transition-all duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6cf9d]">
                   <span class="en block text-2xl font-light text-[#f3ead8]">${b.name}</span>
                   <span class="ko mt-1 block text-[12px] font-light leading-[1.7] text-[#f3ead8]/60">${b.desc}</span>
+                  <span class="ko mt-2 block text-sm font-medium text-[#e6cf9d]">${b.price}</span>
                   <span class="bed-ring absolute right-4 top-4 flex h-4 w-4 items-center justify-center rounded-full border transition-colors duration-500"><span class="bed-dot h-2 w-2 rounded-full bg-[#c9a96a] transition-opacity duration-500"></span></span>
                 </button>`).join('')}
             </div>
           </div>
           <div>${subhead('포함 옵션 &amp; 보안')}<ul class="flex flex-col gap-3">${bullets(currentSuite.included)}</ul></div>
           <div>${subhead('부대시설 혜택')}<ul class="flex flex-col gap-3">${bullets(currentSuite.perks)}</ul></div>
-          <a href="#suites" id="cta" class="group relative overflow-hidden border border-[#c9a96a]/70 py-4 text-center text-[#f3ead8] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(201,169,106,0.45)]">
-            <span class="absolute inset-0 translate-y-full bg-gradient-to-r from-[#c9a96a] to-[#e6cf9d] transition-transform duration-700 ease-out group-hover:translate-y-0"></span>
-            <span class="relative z-10 flex flex-col items-center gap-1.5 transition-colors duration-500 group-hover:text-black">
-              <span class="ko text-sm font-light tracking-[0.35em]" style="padding-left:.35em">객실 예약하기</span>
-              <span id="cta-bed" class="lb text-[8px] uppercase tracking-[0.5em] opacity-70" style="padding-left:.5em"></span>
-            </span>
-          </a>
+          
+          <!-- 요금 안내 및 예약 버튼 영역 -->
+          <div class="flex flex-col gap-4 border-t border-[#c9a96a]/25 pt-6">
+            <div class="flex items-center justify-between border border-[#c9a96a]/40 bg-[#c9a96a]/5 px-6 py-4">
+              <span class="lb text-[11px] uppercase tracking-[0.3em] text-[#c9a96a]">Selected Rate</span>
+              <span id="price-display" class="en text-xl font-light text-[#f3ead8]"></span>
+            </div>
+            <a href="#suites" id="cta" class="group relative overflow-hidden border border-[#c9a96a]/70 py-4 text-center text-[#f3ead8] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(201,169,106,0.45)]">
+              <span class="absolute inset-0 translate-y-full bg-gradient-to-r from-[#c9a96a] to-[#e6cf9d] transition-transform duration-700 ease-out group-hover:translate-y-0"></span>
+              <span class="relative z-10 flex flex-col items-center gap-1.5 transition-colors duration-500 group-hover:text-black">
+                <span class="ko text-sm font-light tracking-[0.35em]" style="padding-left:.35em">객실 예약하기</span>
+                <span id="cta-bed" class="lb text-[8px] uppercase tracking-[0.5em] opacity-70" style="padding-left:.5em"></span>
+              </span>
+            </a>
+          </div>
         </div>
       </div>`;
   }
@@ -382,6 +392,7 @@
       $('.bed-dot', b).style.opacity = on ? 1 : 0;
     });
     const selectedBedObj = currentSuite.beds.find((b) => b.id === bed) || currentSuite.beds[0];
+    $('#price-display', panel).textContent = selectedBedObj.price;
     $('#cta-bed', panel).textContent = 'Reserve · ' + selectedBedObj.name;
   }
   const go = (d) => { gi = (gi + d + currentSuite.images.length) % currentSuite.images.length; paintGallery(); };
