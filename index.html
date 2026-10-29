@@ -67,11 +67,9 @@
 
 <!-- ═════════ HERO (동영상 배경 적용) ═════════ -->
 <section id="top" class="relative w-full h-screen overflow-hidden bg-black">
-  <!-- 방금 보내주신 선셋 빌딩 뷰 MP4 동영상 적용 -->
   <video autoplay loop muted playsinline preload="auto" class="absolute top-0 left-0 w-full h-full object-cover z-0">
     <source src="20235463-hd_1080_1920_30fps.mp4" type="video/mp4">
   </video>
-
   <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/40 to-black/80"></div>
   <div class="pointer-events-none absolute inset-0 z-10 bg-gradient-to-tr from-[#c9a96a]/15 via-transparent to-transparent mix-blend-soft-light"></div>
 
@@ -240,11 +238,36 @@
     included: ['프라이빗 키카드 시스템 및 24시간 프론트 데스크 케어', '하이엔드 어메니티 및 미니바 기본 제공'],
     perks: ['프리미엄 피트니스 센터(헬스장) 상시 무료 이용', '럭셔리 사우나 1일 1회 이용권 포함']
   };
-  const $ = (s, r = document) => r.querySelector(s); const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const pad = (n) => String(n).padStart(2, '0');
 
   /* ── 카드 ── */
-  $('#cards').innerHTML = ` <div class="rv" style="transition-delay:.15s"> <article id="card" role="button" tabindex="0" aria-label="${SUITE.nameKo} 상세 보기" class="group relative cursor-pointer overflow-hidden border border-[#c9a96a]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6cf9d]"> <div class="relative aspect-[3/4] overflow-hidden"> <img src="${SUITE.images[0].src}" alt="${SUITE.nameKo} 침실" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.07]"> <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10"></div> <div class="absolute inset-x-0 bottom-0 p-7"> <div class="lb text-[10px] uppercase tracking-[0.4em] text-[#c9a96a]">${SUITE.tags.join(' · ')}</div> <h3 class="ko mt-3 text-3xl font-light text-[#f3ead8]">${SUITE.nameKo}</h3> <p class="en text-xl italic text-[#e6cf9d]">${SUITE.nameEn}</p> <div class="mt-5 flex items-center justify-between border-t border-[#c9a96a]/25 pt-4"> <span class="lb text-[11px] font-light tracking-[0.25em] text-[#f3ead8]/60">VIEW DETAILS</span> <span class="text-[#c9a96a] transition-transform duration-500 group-hover:translate-x-1.5">→</span> </div> </div> </div> </article> </div>`;    /* ── 스크롤 Fade-up ── */ const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -80px 0px' }) : null; $$('.rv').forEach((el) => (io ? io.observe(el) : el.classList.add('in')));
+  $('#cards').innerHTML = `
+    <div class="rv" style="transition-delay:.15s">
+      <article id="card" role="button" tabindex="0" aria-label="${SUITE.nameKo} 상세 보기"
+        class="group relative cursor-pointer overflow-hidden border border-[#c9a96a]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6cf9d]">
+        <div class="relative aspect-[3/4] overflow-hidden">
+          <img src="${SUITE.images[0].src}" alt="${SUITE.nameKo} 침실" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.07]">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10"></div>
+          <div class="absolute inset-x-0 bottom-0 p-7">
+            <div class="lb text-[10px] uppercase tracking-[0.4em] text-[#c9a96a]">${SUITE.tags.join(' · ')}</div>
+            <h3 class="ko mt-3 text-3xl font-light text-[#f3ead8]">${SUITE.nameKo}</h3>
+            <p class="en text-xl italic text-[#e6cf9d]">${SUITE.nameEn}</p>
+            <div class="mt-5 flex items-center justify-between border-t border-[#c9a96a]/25 pt-4">
+              <span class="lb text-[11px] font-light tracking-[0.25em] text-[#f3ead8]/60">VIEW DETAILS</span>
+              <span class="text-[#c9a96a] transition-transform duration-500 group-hover:translate-x-1.5">→</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>`;
+
+  /* ── 스크롤 Fade-up ── */
+  const io = 'IntersectionObserver' in window
+    ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -80px 0px' })
+    : null;
+  $$('.rv').forEach((el) => (io ? io.observe(el) : el.classList.add('in')));
 
   /* ── 모달 ── */
   const modal = $('#modal'), panel = $('#panel');
@@ -262,7 +285,7 @@
       <div class="md:h-[92vh] md:max-h-[820px]">
         <div class="flex h-full flex-col bg-black">
           <div id="stage" class="relative min-h-[260px] flex-1 overflow-hidden md:min-h-[420px]" style="touch-action:pan-y">
-            ${SUITE.images.map((im, n) => `<img class="slide" data-i="${n}" src="${im.src}" alt="${SUITE.nameKo} —${im.ko}" draggable="false">`).join('')}
+            ${SUITE.images.map((im, n) => `<img class="slide" data-i="${n}" src="${im.src}" alt="${SUITE.nameKo} — ${im.ko}" draggable="false">`).join('')}
             <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20"></div>
             <div class="pointer-events-none absolute bottom-5 left-5 right-24">
               <div id="cap-en" class="lb text-[10px] uppercase tracking-[0.4em] text-[#c9a96a]"></div>
@@ -320,14 +343,17 @@
       </div>`;
   }
   function paintGallery() {
-    $$('.slide', panel).forEach((el) => el.classList.toggle('on', +el.dataset.i === gi));$$
-('[data-thumb]', panel).forEach((b) => {
+    $$('.slide', panel).forEach((el) => el.classList.toggle('on', +el.dataset.i === gi));
+    $$('[data-thumb]', panel).forEach((b) => {
       const on = +b.dataset.thumb === gi;
       b.setAttribute('aria-current', on);
       $('.thumb-ov', b).className = 'thumb-ov absolute inset-0 transition-all duration-500 ' + (on ? 'bg-transparent ring-1 ring-inset ring-[#c9a96a]' : 'bg-black/55 hover:bg-black/25');
     });
     $('#cap-en', panel).textContent = pad(gi + 1) + ' / ' + pad(SUITE.images.length) + ' · ' + SUITE.images[gi].en;
-    $('#cap-ko', panel).textContent = SUITE.images[gi].ko; } function paintBed() { $$('.bed', panel).forEach((b) => {
+    $('#cap-ko', panel).textContent = SUITE.images[gi].ko;
+  }
+  function paintBed() {
+    $$('.bed', panel).forEach((b) => {
       const on = b.dataset.bed === bed;
       b.setAttribute('aria-checked', on);
       b.className = 'bed relative border px-5 py-4 text-left transition-all duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#e6cf9d] ' +
@@ -344,4 +370,65 @@
     buildPanel(); paintGallery(); paintBed();
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
-    requestAnimationFrame(() => requestAnimationFrame(() => { modal.classList.add('on');
+    requestAnimationFrame(() => requestAnimationFrame(() => { modal.classList.add('on'); $('#close', panel).focus({ preventScroll: true }); }));
+  }
+  function closeModal() {
+    modal.classList.remove('on');
+    document.body.style.overflow = '';
+    setTimeout(() => { modal.hidden = true; if (lastFocus) lastFocus.focus({ preventScroll: true }); }, 520);
+  }
+
+  const card = $('#card');
+  card.addEventListener('click', openModal);
+  card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); } });
+  $('#backdrop').addEventListener('click', closeModal);
+
+  panel.addEventListener('click', (e) => {
+    const t = e.target.closest('button, a'); if (!t) return;
+    if (t.id === 'close') closeModal();
+    else if (t.dataset.go) go(+t.dataset.go);
+    else if (t.dataset.thumb) { gi = +t.dataset.thumb; paintGallery(); }
+    else if (t.dataset.bed) { bed = t.dataset.bed; paintBed(); }
+    else if (t.id === 'cta') { e.preventDefault(); closeModal(); }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (modal.hidden) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowRight') go(1);
+    if (e.key === 'ArrowLeft') go(-1);
+  });
+
+  let sx = null;
+  panel.addEventListener('pointerdown', (e) => { if (e.target.closest('#stage') && !e.target.closest('button')) sx = e.clientX; });
+  panel.addEventListener('pointerup', (e) => {
+    if (sx === null) return;
+    const dx = e.clientX - sx; sx = null;
+    if (dx < -50) go(1); else if (dx > 50) go(-1);
+  });
+</script>
+<script>
+  (function () {
+    const nav = document.getElementById('nav'), logo = document.getElementById('nav-logo');
+    const bar = document.getElementById('progress'), glow = document.getElementById('glow');
+    const sec = document.getElementById('experience');
+    const on = ['border-[#c9a96a]/20', 'bg-[#121110]/55', 'py-4', 'shadow-[0_10px_40px_rgba(0,0,0,0.35)]', 'backdrop-blur-xl'];
+    const off = ['border-transparent', 'bg-transparent', 'py-7'];
+    function tick() {
+      const y = window.scrollY, scrolled = y > 60;
+      off.forEach((c) => nav.classList.toggle(c, !scrolled));
+      on.forEach((c) => nav.classList.toggle(c, scrolled));
+      logo.classList.toggle('opacity-0', !scrolled);
+      logo.classList.toggle('pointer-events-none', !scrolled);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
+      const r = sec.getBoundingClientRect(), p = (window.innerHeight - r.top) / (window.innerHeight + r.height);
+      glow.style.transform = 'translateY(' + ((Math.min(1, Math.max(0, p)) - 0.5) * 24) + '%)';
+    }
+    tick();
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+  })();
+</script>
+</body>
+</html>
