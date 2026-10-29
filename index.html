@@ -3,234 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BELLUCE Grand Hotel &amp; Residences</title>
+  <title>LUMIÈRE - Grand Luxury Hotel</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Google Web Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Noto+Serif+KR:wght@200;300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400&family=Noto+Serif+KR:wght@200;300;400&display=swap"
     rel="stylesheet"
   />
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            serifEn: ["'Cormorant Garamond'", "Georgia", "serif"],
-            serifKo: ["'Noto Serif KR'", "'Apple SD Gothic Neo'", "serif"],
-            sansLabel: ["'Jost'", "sans-serif"],
-          },
-        },
-      },
-    };
-  </script>
-
   <style>
-    /* 폰트 유틸리티 */
     .font-cormorant {
       font-family: 'Cormorant Garamond', Georgia, serif;
-    }
-    .font-noto-serif {
-      font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', serif;
-      word-break: keep-all;
     }
     .font-jost {
       font-family: 'Jost', sans-serif;
     }
+    .font-noto {
+      font-family: 'Noto Serif KR', serif;
+      word-break: keep-all;
+    }
 
-    /* Framer Motion의 Fade-up 애니메이션을 순수 CSS로 재현 (동일한 베지어 곡선) */
-    @keyframes fadeUp {
-      0% {
+    /* 순차 페이드업 애니메이션 */
+    @keyframes heroFadeUp {
+      from {
         opacity: 0;
-        transform: translateY(35px);
+        transform: translateY(30px);
       }
-      100% {
+      to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-
-    .animate-fade-up {
+    .fade-up {
       opacity: 0;
-      animation: fadeUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: heroFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.45s; }
+    .delay-3 { animation-delay: 0.7s; }
+    .delay-4 { animation-delay: 0.95s; }
 
-    /* Stagger 딜레이 */
-    .delay-1 { animation-delay: 0.3s; }
-    .delay-2 { animation-delay: 0.55s; }
-    .delay-3 { animation-delay: 0.8s; }
-    .delay-4 { animation-delay: 1.05s; }
-    .delay-5 { animation-delay: 1.3s; }
-
-    /* Scroll Down 수직 라인 루프 애니메이션 */
-    @keyframes scrollLine {
-      0% {
-        transform: translateY(-100%);
-      }
-      100% {
-        transform: translateY(100%);
-      }
+    /* 스크롤 인디케이터 라인 애니메이션 */
+    @keyframes pulseLine {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
     }
-
-    .animate-scroll-line {
-      animation: scrollLine 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    .animate-pulse-line {
+      animation: pulseLine 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
     }
   </style>
 </head>
-<body class="bg-[#0a0a0a] text-white selection:bg-[#c9a96a]/30 selection:text-[#f3ead8] overflow-x-hidden">
+<body class="bg-black text-white selection:bg-[#c9a96a]/30 overflow-x-hidden">
 
-  <!-- ================= BELLUCE HERO SECTION ================= -->
-  <section id="top" class="relative w-full h-screen overflow-hidden bg-[#0d0d0d]">
+  <!-- ================= HERO SECTION ================= -->
+  <section class="relative w-full h-screen overflow-hidden bg-black flex items-center justify-center">
     
-    <!-- 1. 풀스크린 비디오 배경 (로컬 hotel-bg.mp4 우선, 부재 시 온라인 샘플 영상 + 포스터 표시) -->
+    <!-- 1. 로컬 비디오 배경 (public 폴더의 /hotel-bg.mp4) -->
     <video
-      id="bgVideo"
+      id="hotelVideo"
+      src="/hotel-bg.mp4"
       autoplay
       loop
       muted
       playsinline
-      preload="auto"
-      aria-hidden="true"
-      tabindex="-1"
-      poster="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=2000&q=80"
-      class="absolute top-0 left-0 w-full h-full object-cover z-0 transition-opacity duration-1000 opacity-90"
-    >
-      <source src="hotel-bg.mp4" type="video/mp4" />
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-luxury-hotel-reception-and-lobby-41558-large.mp4" type="video/mp4" />
-    </video>
+      class="absolute top-0 left-0 w-full h-full object-cover z-0"
+    ></video>
 
-    <!-- 2. 시네마틱 오버레이: 상하 다크 그라데이션 + 골드 톤 블렌딩 -->
-    <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/80 via-black/45 to-black/85 pointer-events-none"></div>
-    <div class="absolute inset-0 z-10 bg-gradient-to-tr from-[#c9a96a]/15 via-transparent to-transparent mix-blend-soft-light pointer-events-none"></div>
+    <!-- 2. 반투명 다크 오버레이 (시네마틱 그라데이션) -->
+    <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/30 to-black/70 pointer-events-none"></div>
 
-    <!-- 3. 메인 콘텐츠 컨테이너 -->
-    <div class="relative z-20 flex h-full flex-col items-center justify-between px-6 py-10 md:py-14 text-center">
+    <!-- 3. 컨텐츠 컨테이너 (정중앙 배치) -->
+    <div class="relative z-20 flex flex-col items-center justify-center text-center px-6 max-w-4xl mx-auto">
       
-      <!-- 상단 로고 -->
-      <header class="animate-fade-up delay-1 flex flex-col items-center leading-none">
-        <a href="#top" class="group flex flex-col items-center">
-          <span
-            class="font-cormorant text-3xl font-light tracking-[0.55em] text-[#f3ead8] md:text-4xl select-none transition-opacity duration-300 group-hover:opacity-90"
-            style="padding-left: 0.55em;"
-          >
-            BELLUCE
-          </span>
-          <span
-            class="font-jost mt-3 text-[9px] uppercase tracking-[0.6em] text-[#c9a96a] md:text-[10px]"
-            style="padding-left: 0.6em;"
-          >
-            Grand Hotel &amp; Residences
-          </span>
-        </a>
-      </header>
+      <!-- 서브 슬로건 -->
+      <p 
+        class="fade-up delay-1 font-jost text-xs md:text-sm font-light tracking-[0.45em] uppercase text-[#e6cf9d] mb-4 md:mb-5 drop-shadow-md"
+        style="padding-left: 0.45em;"
+      >
+        A Symphony of Time and Space
+      </p>
 
-      <!-- 중앙 슬로건 & 카피 -->
-      <main class="flex flex-col items-center gap-7 md:gap-9 my-auto">
-        <h1
-          class="animate-fade-up delay-2 font-cormorant text-4xl font-light leading-[1.25] tracking-[0.1em] text-[#f3ead8] drop-shadow-[0_4px_30px_rgba(0,0,0,0.8)] md:text-6xl md:tracking-[0.12em] lg:text-7xl"
-          style="padding-left: 0.1em;"
-        >
-          Your Stay,<br />
-          <span class="text-[#e6cf9d]">Beyond Premium</span>
-        </h1>
+      <!-- 호텔 메인 타이틀 -->
+      <h1 
+        class="fade-up delay-2 font-cormorant text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-light tracking-[0.25em] text-[#f3ead8] drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)] mb-6 md:mb-8 select-none"
+        style="padding-left: 0.25em;"
+      >
+        LUMIÈRE
+      </h1>
 
-        <!-- 미니멀 골드 라인 -->
-        <span class="animate-fade-up delay-3 block h-px w-14 bg-[#c9a96a]/80 md:w-20"></span>
+      <!-- 미니멀 골드 구분선 -->
+      <div class="fade-up delay-3 w-16 md:w-24 h-px bg-[#c9a96a]/80 mb-7 md:mb-9"></div>
 
-        <p
-          class="animate-fade-up delay-4 font-noto-serif text-sm font-light tracking-[0.2em] text-[#d8d4cb]/85 md:text-lg"
-          style="padding-left: 0.2em;"
-        >
-          당신이 머무는 곳, 그곳이 곧 프리미엄
-        </p>
-      </main>
+      <!-- 보조 카피 -->
+      <p 
+        class="fade-up delay-3 font-noto text-sm md:text-base font-light tracking-[0.2em] text-[#d8d4cb]/90 mb-9 md:mb-11"
+        style="padding-left: 0.2em;"
+      >
+        시간과 공간이 빚어내는 궁극의 휴식
+      </p>
 
-      <!-- 하단 CTA 버튼 & Scroll Down 인디케이터 -->
-      <footer class="animate-fade-up delay-5 flex flex-col items-center gap-8">
-        
-        <!-- CTA 버튼 -->
+      <!-- 예약 버튼 -->
+      <div class="fade-up delay-4">
         <a
           href="#reserve"
-          class="group relative inline-block overflow-hidden border border-[#c9a96a]/70 px-12 py-3.5 md:px-14 md:py-4 text-[#f3ead8] transition-all duration-500 hover:shadow-[0_0_40px_rgba(201,169,106,0.35)] hover:-translate-y-0.5 active:scale-95"
+          class="group relative inline-block overflow-hidden border border-[#c9a96a]/80 px-10 py-3.5 md:px-14 md:py-4 transition-all duration-500 hover:shadow-[0_0_40px_rgba(201,169,106,0.45)] hover:-translate-y-0.5 active:scale-95"
         >
-          <!-- 호버 시 아래에서 차오르는 골드빛 -->
-          <span
-            class="absolute inset-0 translate-y-full bg-gradient-to-r from-[#c9a96a] to-[#e6cf9d] transition-transform duration-700 ease-out group-hover:translate-y-0"
-          ></span>
+          <!-- 호버 시 골드 그라데이션 차오름 -->
+          <span class="absolute inset-0 translate-y-full bg-gradient-to-r from-[#c9a96a] to-[#e6cf9d] transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
           
-          <span class="relative z-10 flex flex-col items-center gap-1.5 transition-colors duration-500 group-hover:text-black">
-            <span
-              class="font-noto-serif text-xs md:text-sm font-normal tracking-[0.35em]"
-              style="padding-left: 0.35em;"
-            >
-              객실 예약하기
-            </span>
-            <span
-              class="font-jost text-[8px] uppercase tracking-[0.5em] opacity-75"
-              style="padding-left: 0.5em;"
-            >
-              Reserve Your Stay
-            </span>
+          <!-- 버튼 텍스트 -->
+          <span class="relative z-10 font-jost text-xs md:text-sm tracking-[0.35em] uppercase text-[#f3ead8] transition-colors duration-500 group-hover:text-black" style="padding-left: 0.35em;">
+            Reserve Your Stay
           </span>
         </a>
+      </div>
 
-        <!-- Scroll Down 인디케이터 -->
-        <div
-          onclick="smoothScrollNext()"
-          class="flex flex-col items-center gap-2 select-none opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
-        >
-          <span
-            class="font-jost text-[9px] tracking-[0.4em] uppercase text-[#f3ead8]/70"
-            style="padding-left: 0.4em;"
-          >
-            Scroll
-          </span>
-          <div class="relative w-px h-8 bg-white/20 overflow-hidden">
-            <div class="w-full h-1/2 bg-[#c9a96a] animate-scroll-line"></div>
-          </div>
-        </div>
-
-      </footer>
     </div>
+
+    <!-- 하단 Scroll Down 인디케이터 -->
+    <div class="absolute bottom-8 z-20 flex flex-col items-center gap-2 opacity-60 pointer-events-none">
+      <span class="font-jost text-[9px] tracking-[0.3em] uppercase text-[#f3ead8]/70" style="padding-left: 0.3em;">
+        Scroll
+      </span>
+      <div class="w-px h-8 bg-white/20 overflow-hidden relative">
+        <div class="w-full h-1/2 bg-[#c9a96a] animate-pulse-line"></div>
+      </div>
+    </div>
+
   </section>
 
-  <!-- 다음 섹션 (스크롤 테스트용) -->
-  <section id="reserve" class="min-h-screen bg-[#111111] py-24 px-6 flex flex-col items-center justify-center text-center">
-    <span class="font-jost text-xs uppercase tracking-[0.5em] text-[#c9a96a] mb-3" style="padding-left: 0.5em;">Experience</span>
-    <h2 class="font-cormorant text-4xl md:text-5xl font-light text-[#f3ead8] mb-6">Unrivaled Hospitality</h2>
-    <p class="font-noto-serif text-[#d8d4cb]/70 max-w-xl text-sm md:text-base leading-relaxed">
-      벨루체에서 만나는 최상의 휴식과 잊지 못할 경험.<br />
-      사계절의 풍경과 어우러진 최고급 스위트와 다이닝을 만나보세요.
-    </p>
-  </section>
-
-  <!-- 스크립트: 자동재생 및 부드러운 스크롤 처리 -->
+  <!-- 브라우저 자동재생 보정 스크립트 -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const video = document.getElementById("bgVideo");
+      const video = document.getElementById("hotelVideo");
       if (video) {
         video.muted = true;
         const playPromise = video.play();
         if (playPromise !== undefined) {
           playPromise.catch(function (error) {
-            console.log("자동재생 대기:", error);
+            console.warn("자동재생 대기:", error);
           });
         }
       }
     });
-
-    function smoothScrollNext() {
-      const nextSection = document.getElementById("reserve");
-      if (nextSection) {
-        nextSection.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-      }
-    }
   </script>
 </body>
 </html>
