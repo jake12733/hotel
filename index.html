@@ -17,7 +17,10 @@
   :root { color-scheme: dark; --bg: #000; }
   html, body { margin: 0; background: var(--bg); scroll-behavior: smooth; }
   body { overflow-x: hidden; }
-  .en { font-family: 'Cormorant Garamond', 'Noto Serif KR', Georgia, serif; }
+  /* 폰트 적용 강제화 (!important 추가) */
+  .en { font-family: 'Cormorant Garamond', Georgia, serif !important; }
+  /* 숫자 가격은 가독성이 좋은 Jost 글꼴로 통일 */
+  #res-price, #modal-price-num { font-family: 'Jost', sans-serif !important; font-variant-numeric: lining-nums tabular-nums; }
   .ko { font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', serif; word-break: keep-all; }
   .lb { font-family: 'Jost', 'Noto Serif KR', sans-serif; }
   @keyframes heroFadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
@@ -39,7 +42,7 @@
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Noto+Serif+KR:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&family=Noto+Serif+KR:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 
 <!-- ═════════ NAVBAR + PROGRESS ═════════ -->
@@ -252,7 +255,7 @@
   </div>
 </section>
 
-<!-- ═════════ 상세 모달 (가격 폰트 분리 적용 완료) ═════════ -->
+<!-- ═════════ 상세 모달 (가격 폰트 분리 및 강제 적용 완료) ═════════ -->
 <div id="modal" hidden>
   <div id="backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeModal()"></div>
   <div id="panel" class="panel relative grid max-h-full w-full max-w-6xl grid-cols-1 overflow-y-auto border border-[#c9a96a]/30 bg-[#121110] shadow-[0_30px_120px_rgba(0,0,0,0.8)] md:max-h-[92vh] md:grid-cols-[1.05fr_1fr] md:overflow-hidden" role="dialog" aria-modal="true">
