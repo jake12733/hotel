@@ -252,17 +252,64 @@
   </div>
 </section>
 
-<!-- ═════════ 상세 모달 ═════════ -->
+<!-- ═════════ 상세 모달 (이미지 슬라이드 및 상세정보 완벽 복원) ═════════ -->
 <div id="modal" hidden>
-  <div id="backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md" onclick="closeModal()"></div>
+  <div id="backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-md"></div>
   <div id="panel" class="panel relative grid max-h-full w-full max-w-6xl grid-cols-1 overflow-y-auto border border-[#c9a96a]/30 bg-[#121110] shadow-[0_30px_120px_rgba(0,0,0,0.8)] md:max-h-[92vh] md:grid-cols-[1.05fr_1fr] md:overflow-hidden" role="dialog" aria-modal="true">
-    <div class="p-8 md:p-12">
-      <div class="flex items-center justify-between border-b border-[#c9a96a]/20 pb-4">
-        <span class="lb text-xs uppercase tracking-[0.4em] text-[#c9a96a]">Suite Details</span>
-        <button onclick="closeModal()" class="text-[#f3ead8] text-xl">&times;</button>
+    
+    <!-- 좌측 이미지 슬라이드 영역 -->
+    <div class="relative min-h-[320px] bg-black md:min-h-full">
+      <div id="modal-slides" class="absolute inset-0 h-full w-full"></div>
+      <div class="absolute inset-x-0 bottom-0 z-20 flex items-center justify-between p-6 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+        <div class="flex items-center gap-3">
+          <button onclick="prevSlide()" class="border border-[#c9a96a]/40 p-2.5 text-[#f3ead8] transition-colors hover:border-[#c9a96a] hover:bg-[#c9a96a]/1il" aria-label="이전 이미지">←</button>
+          <button onclick="nextSlide()" class="border border-[#c9a96a]/40 p-2.5 text-[#f3ead8] transition-colors hover:border-[#c9a96a] hover:bg-[#c9a96a]/10" aria-label="다음 이미지">→</button>
+        </div>
+        <div id="slide-caption" class="en text-sm tracking-[0.2em] text-[#f3ead8]/90"></div>
+        <div id="slide-dots" class="flex gap-1.5"></div>
       </div>
-      <div id="modal-content" class="mt-6 space-y-4 ko text-sm text-[#f3ead8]/80"></div>
     </div>
+
+    <!-- 우측 상세 정보 영역 -->
+    <div class="relative flex flex-col justify-between p-8 md:p-12 overflow-y-auto max-h-[85vh] md:max-h-[92vh]">
+      <button onclick="closeModal()" class="absolute right-6 top-6 z-20 border border-[#c9a96a]/30 p-2.5 text-[#f3ead8] transition-colors hover:border-[#c9a96a] hover:bg-[#c9a96a]/10" aria-label="모달 닫기">✕</button>
+      
+      <div class="space-y-8">
+        <div>
+          <div id="modal-tags" class="lb text-[10px] uppercase tracking-[0.4em] text-[#c9a96a]"></div>
+          <h3 id="modal-title" class="ko mt-2 text-3xl font-light text-[#f3ead8]"></h3>
+          <p id="modal-en" class="en text-lg italic text-[#e6cf9d]"></p>
+          <p id="modal-concept" class="ko mt-3 text-sm font-light leading-[1.8] text-[#f3ead8]/70"></p>
+        </div>
+
+        <div>
+          <label class="block lb text-[10px] uppercase tracking-[0.3em] text-[#c9a96a] mb-3">Select Bed Option</label>
+          <div id="modal-beds" class="grid grid-cols-2 gap-3"></div>
+        </div>
+
+        <div class="border-t border-[#c9a96a]/20 pt-6">
+          <div class="lb text-[10px] uppercase tracking-[0.3em] text-[#c9a96a] mb-2">Room Amenities &amp; Services</div>
+          <ul id="modal-included" class="space-y-2 text-xs font-light text-[#f3ead8]/70"></ul>
+        </div>
+
+        <div class="border-t border-[#c9a96a]/20 pt-6">
+          <div class="lb text-[10px] uppercase tracking-[0.3em] text-[#c9a96a] mb-2">Exclusive Perks</div>
+          <ul id="modal-perks" class="space-y-2 text-xs font-light text-[#f3ead8]/70"></ul>
+        </div>
+      </div>
+
+      <div class="mt-10 border-t border-[#c9a96a]/20 pt-6 flex items-center justify-between">
+        <div>
+          <span class="block lb text-[9px] uppercase tracking-[0.3em] text-[#c9a96a]">Total Rate</span>
+          <span id="modal-price" class="en text-2xl text-[#f3ead8]"></span>
+        </div>
+        <button onclick="alert('예약 프로세스로 이동합니다.'); closeModal();" class="lb group relative overflow-hidden border border-[#c9a96a] px-8 py-3.5 text-[11px] uppercase tracking-[0.35em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
+          <span class="absolute inset-0 translate-y-full bg-[#c9a96a] transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
+          <span class="relative z-10">Reserve This Suite</span>
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -333,6 +380,9 @@
   ];
 
   let currentSuite = SUITES[0];
+  let currentSlide = 0;
+  let currentBed = null;
+
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
@@ -357,11 +407,9 @@
       </article>
     </div>`).join('');
 
-  // 카드 클릭 시 모달 열기 이벤트 바인딩
   $$('#cards article').forEach(article => {
     article.addEventListener('click', () => {
-      const suiteId = article.getAttribute('data-suite-id');
-      openModal(suiteId);
+      openModal(article.getAttribute('data-suite-id'));
     });
   });
 
@@ -406,27 +454,24 @@
     });
   }
 
-  function openModal(suiteId = 'grand-penthouse') {
-    const modal = document.getElementById('modal');
-    const content = document.getElementById('modal-content');
+  /* ── 모달 및 슬라이드 로직 ── */
+  function openModal(suiteId) {
     currentSuite = SUITES.find(s => s.id === suiteId) || SUITES[0];
-    
-    if(content) {
-      content.innerHTML = `
-        <h3 class="en text-2xl text-[#e6cf9d]">${currentSuite.nameKo} (${currentSuite.nameEn})</h3>
-        <p class="text-xs text-[#f3ead8]/70">${currentSuite.concept}</p>
-        <div class="border border-[#c9a96a]/20 p-4 bg-black/50">
-          <p class="lb text-xs uppercase text-[#c9a96a]">기본 요금 및 구성</p>
-          <p class="mt-1 en text-lg text-[#f3ead8]">${currentSuite.beds[0].price}</p>
-        </div>
-        <div class="space-y-2">
-          <p class="lb text-xs uppercase text-[#c9a96a]">포함 사항</p>
-          <ul class="list-disc list-inside text-xs text-[#f3ead8]/70 space-y-1">
-            ${currentSuite.included.map(inc => `<li>${inc}</li>`).join('')}
-          </ul>
-        </div>
-      `;
-    }
+    currentSlide = 0;
+    currentBed = currentSuite.beds[0];
+
+    $('#modal-tags').textContent = currentSuite.tags.join(' · ');
+    $('#modal-title').textContent = currentSuite.nameKo;
+    $('#modal-en').textContent = currentSuite.nameEn;
+    $('#modal-concept').textContent = currentSuite.concept;
+    $('#modal-included').innerHTML = currentSuite.included.map(inc => `<li>• ${inc}</li>`).join('');
+    $('#modal-perks').innerHTML = currentSuite.perks.map(perk => `<li>• ${perk}</li>`).join('');
+
+    renderSlides();
+    renderBeds();
+    updatePrice();
+
+    const modal = document.getElementById('modal');
     modal.removeAttribute('hidden');
     setTimeout(() => modal.classList.add('on'), 10);
   }
@@ -435,6 +480,50 @@
     const modal = document.getElementById('modal');
     modal.classList.remove('on');
     setTimeout(() => modal.setAttribute('hidden', ''), 500);
+  }
+
+  function renderSlides() {
+    $('#modal-slides').innerHTML = currentSuite.images.map((img, idx) => `
+      <img src="${img.src}" alt="${img.ko}" class="slide ${idx === currentSlide ? 'on' : ''}">
+    `).join('');
+    $('#slide-caption').textContent = `${currentSuite.images[currentSlide].ko} / ${currentSuite.images[currentSlide].en}`;
+    $('#slide-dots').innerHTML = currentSuite.images.map((_, idx) => `
+      <span class="h-1 w-6 cursor-pointer transition-all ${idx === currentSlide ? 'bg-[#c9a96a]' : 'bg-white/30'}" onclick="setSlide(${idx})"></span>
+    `).join('');
+  }
+
+  function setSlide(idx) {
+    currentSlide = idx;
+    renderSlides();
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % currentSuite.images.length;
+    renderSlides();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + currentSuite.images.length) % currentSuite.images.length;
+    renderSlides();
+  }
+
+  function renderBeds() {
+    $('#modal-beds').innerHTML = currentSuite.beds.map((bed) => `
+      <button type="button" onclick="selectBed('${bed.id}')" class="border p-3.5 text-left transition-all ${currentBed.id === bed.id ? 'border-[#c9a96a] bg-[#c9a96a]/10' : 'border-[#c9a96a]/20 bg-black/40 hover:border-[#c9a96a]/50'}">
+        <div class="en text-sm text-[#f3ead8]">${bed.name}</div>
+        <div class="ko mt-1 text-[11px] text-[#f3ead8]/60">${bed.desc}</div>
+      </button>
+    `).join('');
+  }
+
+  function selectBed(bedId) {
+    currentBed = currentSuite.beds.find(b => b.id === bedId);
+    renderBeds();
+    updatePrice();
+  }
+
+  function updatePrice() {
+    $('#modal-price').textContent = currentBed.price;
   }
 </script>
 </body>
