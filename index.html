@@ -219,7 +219,6 @@
 <script>
   document.documentElement.classList.add('js');
   
-  // 객실 데이터 목록 (디럭스 + 프리미어 스위트)
   const SUITES = [
     {
       id: 'deluxe-sanctuary',
@@ -228,9 +227,9 @@
       concept: '도심 속 완벽한 휴식을 시작하는 시그니처 객실',
       tags: ['시티뷰', '통창 구조'],
       images: [
-        { src: 'pexels-quang-nguyen-vinh-222549-14021931.jpg', ko: '침실', en: 'Bedroom' },
-        { src: 'pexels-misbaa-eri-426041722-37252339_2.jpg', ko: '거실 · 라운지', en: 'Lounge' },
-        { src: 'pexels-alley-chien-2150148608-35747331.jpg', ko: '럭셔리 욕실', en: 'Bathroom' }
+        { src: 'pexels-quang-nguyen-vinh-222549-14036241.jpg', ko: '침실', en: 'Bedroom' },
+        { src: 'pexels-misbaa-eri-426041722-37252339.jpg', ko: '거실 · 라운지', en: 'Lounge' },
+        { src: 'pexels-thiha-soe-2746200-5883736.jpg', ko: '럭셔리 욕실', en: 'Bathroom' }
       ],
       beds: [
         { id: 'king', name: 'King Bed', desc: '킹 사이즈 프리미엄 매트리스' },
@@ -246,7 +245,7 @@
       concept: '탁 트인 파노라믹 뷰와 독립된 리빙 공간을 갖춘 하이엔드 스위트',
       tags: ['파노라믹 뷰', '분리형 거실', '코너 스위트'],
       images: [
-        { src: 'pexels-misbaa-eri-426041722-37252339_2.jpg', ko: '프리미어 거실', en: 'Living Room' },
+        { src: 'pexels-misbaa-eri-426041722-37252339.jpg', ko: '프리미어 거실', en: 'Living Room' },
         { src: 'pexels-quang-nguyen-vinh-222549-14021931.jpg', ko: '마스터 침실', en: 'Master Bedroom' },
         { src: 'pexels-alley-chien-2150148608-35747331.jpg', ko: '스위트 욕실', en: 'Suite Bathroom' }
       ],
@@ -263,7 +262,7 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const pad = (n) => String(n).padStart(2, '0');
 
-  /* ── 카드 렌더링 (여러 객실 동적 생성) ── */
+  /* ── 카드 렌더링 ── */
   $('#cards').innerHTML = SUITES.map((suite, index) => `
     <div class="rv" style="transition-delay:${index * 0.15}s">
       <article data-suite-id="${suite.id}" role="button" tabindex="0" aria-label="${suite.nameKo} 상세 보기"
@@ -444,7 +443,6 @@
     const off = ['border-transparent', 'bg-transparent', 'py-7'];
     function tick() {
       const y = window.scrollY, scrolled = y > 60;
-      off.pages?.forEach((c) => nav.classList.toggle(c, !scrolled));
       off.forEach((c) => nav.classList.toggle(c, !scrolled));
       on.forEach((c) => nav.classList.toggle(c, scrolled));
       logo.classList.toggle('opacity-0', !scrolled);
