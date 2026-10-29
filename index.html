@@ -524,12 +524,10 @@
   }
 
   function updatePrice() {
-    // 가격 문자열에서 숫자 부분과 '/ 박' 단위를 분리하여 렌더링
-    const parts = currentBed.price.split(' '); // ['₩1,280,000', '/', '박']
-    const priceNum = parts[0]; // '₩1,280,000'
-    const priceUnit = parts.slice(1).join(' '); // '/ 박'
-    
-    $('#modal-price.text-2xl').innerHTML = `<span class="en">${priceNum}</span> <span class="ko text-sm opacity-80">${priceUnit}</span>`;
+    const parts = currentBed.price.split(' ');
+    const priceNum = parts[0];
+    const priceUnit = parts.slice(1).join(' ');
+    $('#modal-price').innerHTML = `<span class="en">${priceNum}</span> <span class="ko text-sm opacity-80">${priceUnit}</span>`;
   }
 </script>
 </body>
