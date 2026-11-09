@@ -315,23 +315,40 @@
               <label for="res-date" class="lb block text-[11px] uppercase tracking-[0.28em] text-[#c9a96a]">02 &nbsp; Check-in Date</label>
               <input type="date" id="res-date" class="ko mt-3 w-full cursor-pointer border-0 border-b border-[#c9a96a]/25 bg-transparent py-3 text-sm font-light text-[#f3ead8] outline-none transition-colors focus:border-[#c9a96a] [color-scheme:dark]">
             </div>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div class="group border border-[#c9a96a]/20 bg-black/20 px-5 py-5 transition-colors duration-300 focus-within:border-[#c9a96a]/70 hover:border-[#c9a96a]/40" data-f="out">
+                <label for="res-out" class="lb block text-[11px] uppercase tracking-[0.28em] text-[#c9a96a]">03 &nbsp; Check-out</label>
+                <input type="date" id="res-out" class="ko mt-3 w-full cursor-pointer border-0 border-b border-[#c9a96a]/25 bg-transparent py-3 text-sm font-light text-[#f3ead8] outline-none transition-colors focus:border-[#c9a96a] [color-scheme:dark]">
+              </div>
+              <div class="group border border-[#c9a96a]/20 bg-black/20 px-5 py-5 transition-colors duration-300 focus-within:border-[#c9a96a]/70 hover:border-[#c9a96a]/40">
+                <label for="res-guests" class="lb block text-[11px] uppercase tracking-[0.28em] text-[#c9a96a]">04 &nbsp; Guests</label>
+                <select id="res-guests" class="ko mt-3 w-full cursor-pointer border-0 border-b border-[#c9a96a]/25 bg-transparent py-3 text-sm font-light text-[#f3ead8] outline-none transition-colors focus:border-[#c9a96a] [color-scheme:dark]">
+                  <option value="1" class="bg-[#121110]">성인 1명</option>
+                  <option value="2" class="bg-[#121110]" selected>성인 2명</option>
+                  <option value="3" class="bg-[#121110]">성인 3명</option>
+                  <option value="4" class="bg-[#121110]">성인 4명</option>
+                </select>
+              </div>
+            </div>
+            <p id="res-err" class="bk-err" role="alert" hidden></p>
 
             <div class="flex flex-col gap-3 border border-[#c9a96a]/35 bg-gradient-to-br from-[#c9a96a]/[0.09] to-transparent p-5 sm:flex-row sm:items-end sm:justify-between sm:px-6 sm:py-6">
               <div>
                 <p class="lb text-[11px] uppercase tracking-[0.28em] text-[#c9a96a]">Estimated Rate</p>
                 <p class="ko mt-2 text-sm font-light tracking-wide text-[#f3ead8]/70">객실 요금 시작가</p>
               </div>
-              <div id="res-price" class="text-3xl font-light tracking-tight text-[#f0d9a4] sm:text-right">₩1,280,000~</div>
+              <div class="sm:text-right"><div id="res-price" class="text-3xl font-light tracking-tight text-[#f0d9a4]">₩1,280,000~</div><p id="res-calc" class="ko mt-1 text-xs text-[#f3ead8]/70"></p></div>
             </div>
           </div>
 
           <div class="mt-7">
-            <button onclick="openModal('grand-penthouse')" class="group relative flex w-full items-center justify-between overflow-hidden border border-[#c9a96a] bg-[#c9a96a] px-6 py-5 text-left text-[#100e0b] transition-all duration-500 hover:shadow-[0_0_35px_rgba(201,169,106,.2)] sm:px-7">
+            <button type="button" onclick="bkStart()" class="group relative flex w-full items-center justify-between overflow-hidden border border-[#c9a96a] bg-[#c9a96a] px-6 py-5 text-left text-[#100e0b] transition-all duration-500 hover:shadow-[0_0_35px_rgba(201,169,106,.2)] sm:px-7">
               <span class="absolute inset-0 -translate-x-full bg-[#e6cf9d] transition-transform duration-500 group-hover:translate-x-0"></span>
               <span class="relative z-10"><span class="lb block text-[10px] uppercase tracking-[0.3em] opacity-80">Continue to details</span><span class="ko mt-1 block text-base font-medium tracking-[0.12em]">예약 정보 확인하기</span></span>
               <span class="relative z-10 text-xl transition-transform duration-300 group-hover:translate-x-1">↗</span>
             </button>
             <p class="ko mt-4 text-center text-xs font-light leading-relaxed text-[#f3ead8]/50">표시된 요금은 시작가이며 실제 요금은 일정 및 객실 조건에 따라 달라질 수 있습니다.</p>
+            <p class="bk-demo-note">PORTFOLIO DEMO · 실제 예약은 접수되지 않습니다</p>
           </div>
         </div>
       </div>
@@ -393,7 +410,7 @@
             <span id="modal-price-unit" class="ko text-sm opacity-80"></span>
           </div>
         </div>
-        <button onclick="document.getElementById('res-suite').value = currentSuite.id; closeModal(); document.getElementById('reserve').scrollIntoView({ behavior: 'smooth', block: 'start' });" class="lb group relative overflow-hidden border border-[#c9a96a] px-8 py-3.5 text-[11px] uppercase tracking-[0.35em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
+        <button type="button" onclick="bkGuest()" class="lb group relative overflow-hidden border border-[#c9a96a] px-8 py-3.5 text-[11px] uppercase tracking-[0.35em] text-[#e6cf9d] transition-all duration-500 hover:text-black">
           <span class="absolute inset-0 translate-y-full bg-[#c9a96a] transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
           <span class="relative z-10">예약하기</span>
         </button>
@@ -403,6 +420,178 @@
   </div>
 </div>
 
+
+<!-- ═════════ 데모 예약 시트 (03 / 03 · 완료) ═════════ -->
+<div id="bk" hidden>
+  <div class="bk-bg" onclick="bkClose()"></div>
+  <div class="bk-panel" role="dialog" aria-modal="true" aria-labelledby="bk-title">
+    <button type="button" class="bk-x" onclick="bkClose()" aria-label="닫기">✕</button>
+    <!-- 투숙객 정보 -->
+    <form id="bk-form" novalidate>
+      <div class="bk-head">
+        <div><p class="lb bk-eyebrow">Guest Details</p><h3 id="bk-title" class="ko bk-h">투숙객 정보 입력</h3></div>
+        <span class="en bk-step">03<small> / 03</small></span>
+      </div>
+      <div id="bk-sum" class="bk-sum"></div>
+      <div class="bk-grid">
+        <label class="bk-f"><span class="lb">Name · 성함</span><input id="bk-name" class="ko" autocomplete="name" placeholder="홍길동"><em></em></label>
+        <label class="bk-f"><span class="lb">Phone · 연락처</span><input id="bk-phone" class="ko" inputmode="numeric" autocomplete="tel" placeholder="010-0000-0000" maxlength="13"><em></em></label>
+        <label class="bk-f bk-wide"><span class="lb">E-mail · 이메일</span><input id="bk-email" class="ko" type="email" autocomplete="email" placeholder="name@example.com"><em></em></label>
+        <label class="bk-f bk-wide"><span class="lb">Request · 요청사항 (선택)</span><textarea id="bk-req" class="ko" rows="2" maxlength="300" placeholder="기념일, 얼리 체크인 등 요청사항을 남겨 주세요"></textarea></label>
+      </div>
+      <label class="bk-agree ko"><input type="checkbox" id="bk-agree"> <span>[필수] 예약 확인을 위한 개인정보 수집·이용에 동의합니다.</span></label>
+      <em id="bk-agree-err" class="bk-ferr"></em>
+      <button type="submit" id="bk-submit" class="bk-btn"><span class="lb">Request Reservation</span><b class="ko">예약 요청하기</b></button>
+      <p class="bk-demo-note">PORTFOLIO DEMO · 입력 정보는 저장·전송되지 않습니다</p>
+    </form>
+    <!-- 완료 -->
+    <div id="bk-done" hidden>
+      <div class="bk-check" aria-hidden="true">✓</div>
+      <p class="lb bk-eyebrow" style="text-align:center">Reservation Requested</p>
+      <h3 class="ko bk-h" style="text-align:center">예약 요청이 접수되었습니다</h3>
+      <p class="ko bk-sub">확인 후 24시간 이내에 컨시어지가 연락드립니다.</p>
+      <div class="bk-no"><span class="lb">Confirmation No.</span><b id="bk-no" class="en"></b></div>
+      <dl id="bk-receipt" class="bk-receipt"></dl>
+      <div class="bk-actions"><button type="button" class="bk-btn2" onclick="bkCopy()">예약 내용 복사</button><button type="button" class="bk-btn" onclick="bkClose()"><b class="ko">확인</b></button></div>
+      <p class="bk-demo-note">PORTFOLIO DEMO · 실제 예약은 접수되지 않습니다</p>
+    </div>
+  </div>
+</div>
+<script>
+/* ── 데모 예약 흐름: 01 일정 선택 → 02 객실 상세(모달) → 03 투숙객 정보 → 완료 ── */
+(function(){
+  var $id=function(i){return document.getElementById(i)};
+  var BK={}; window.__BK=BK;
+  var won=function(n){return '₩'+Number(n).toLocaleString('ko-KR')};
+  var num=function(s){return +String(s).replace(/[^\d]/g,'')};
+  var ymd=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+  var addD=function(s,n){var d=new Date(s+'T00:00:00');d.setDate(d.getDate()+n);return ymd(d)};
+  var kday=function(s){var d=new Date(s+'T00:00:00');return (d.getMonth()+1)+'월 '+d.getDate()+'일 ('+'일월화수목금토'[d.getDay()]+')'};
+  var nightsOf=function(a,b){return Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/864e5)};
+  var inEl=$id('res-date'), outEl=$id('res-out'), suiteEl=$id('res-suite'), guestEl=$id('res-guests'), errEl=$id('res-err'), calcEl=$id('res-calc');
+  var today=ymd(new Date());
+  inEl.min=today; outEl.min=addD(today,1);
+  function basePrice(id){var s=SUITES.find(function(x){return x.id===id});return s?num(s.beds[0].priceNum):0}
+  function clearErr(){errEl.hidden=true;document.querySelectorAll('#reserve .bk-bad').forEach(function(e){e.classList.remove('bk-bad')})}
+  function showErr(msg,el){errEl.textContent=msg;errEl.hidden=false;if(el){el.closest('.group').classList.add('bk-bad');el.focus({preventScroll:true});}}
+  function calc(){var a=inEl.value,b=outEl.value;if(a&&b&&b>a){var n=nightsOf(a,b);calcEl.textContent=n+'박 예상 '+won(basePrice(suiteEl.value)*n)+'~';}else calcEl.textContent='';}
+  inEl.addEventListener('change',function(){clearErr();if(inEl.value){outEl.min=addD(inEl.value,1);if(!outEl.value||outEl.value<=inEl.value)outEl.value=addD(inEl.value,1);}calc();});
+  outEl.addEventListener('change',function(){clearErr();calc();});
+  suiteEl.addEventListener('change',calc);
+  function validDates(){
+    clearErr();
+    if(!inEl.value){showErr('체크인 날짜를 선택해 주세요.',inEl);return false;}
+    if(inEl.value<today){showErr('지난 날짜는 선택할 수 없어요.',inEl);return false;}
+    if(!outEl.value){showErr('체크아웃 날짜를 선택해 주세요.',outEl);return false;}
+    if(outEl.value<=inEl.value){showErr('체크아웃은 체크인 다음 날 이후로 선택해 주세요.',outEl);return false;}
+    if(nightsOf(inEl.value,outEl.value)>30){showErr('온라인 예약은 최대 30박까지 가능해요.',outEl);return false;}
+    return true;
+  }
+  window.bkStart=function(){
+    if(!validDates()){$id('reserve').scrollIntoView({behavior:'smooth',block:'center'});return;}
+    openModal(suiteEl.value);
+  };
+  window.bkGuest=function(){
+    suiteEl.value=currentSuite.id; calc();
+    if(!inEl.value||!outEl.value||outEl.value<=inEl.value){
+      closeModal();
+      setTimeout(function(){$id('reserve').scrollIntoView({behavior:'smooth',block:'center'});validDates();},350);
+      return;
+    }
+    BK.suite=currentSuite; BK.bed=currentBed; BK.in=inEl.value; BK.out=outEl.value; BK.nights=nightsOf(BK.in,BK.out);
+    BK.guests=guestEl.value; BK.rate=num(currentBed.priceNum); BK.total=BK.rate*BK.nights;
+    $id('bk-sum').innerHTML='<div><span class="lb">Suite</span><b class="ko">'+BK.suite.nameKo+' · '+BK.bed.name+'</b></div>'+
+      '<div><span class="lb">Stay</span><b class="ko">'+kday(BK.in)+' → '+kday(BK.out)+' · '+BK.nights+'박</b></div>'+
+      '<div><span class="lb">Guests</span><b class="ko">성인 '+BK.guests+'명</b></div>'+
+      '<div class="bk-total"><span class="lb">Total</span><b><span class="en">'+won(BK.total)+'</span><small class="ko"> ('+won(BK.rate)+' × '+BK.nights+'박, 세금·봉사료 별도)</small></b></div>';
+    closeModal();
+    setTimeout(function(){openBk();},420);
+  };
+  var bk=$id('bk'), form=$id('bk-form'), done=$id('bk-done'), lastFocus=null;
+  function openBk(){lastFocus=document.activeElement;form.hidden=false;done.hidden=true;bk.hidden=false;document.body.style.overflow='hidden';requestAnimationFrame(function(){bk.classList.add('on');setTimeout(function(){$id('bk-name').focus();},250);});}
+  window.bkClose=function(){bk.classList.remove('on');document.body.style.overflow='';setTimeout(function(){bk.hidden=true;},400);if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!bk.hidden)bkClose();});
+  var phone=$id('bk-phone');
+  phone.addEventListener('input',function(){var d=phone.value.replace(/\D/g,'').slice(0,11);phone.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4);});
+  function fErr(id,msg){var el=$id(id),em=el.parentElement.querySelector('em');el.setAttribute('aria-invalid',msg?'true':'false');el.parentElement.classList.toggle('bk-bad',!!msg);if(em)em.textContent=msg||'';return !msg;}
+  ['bk-name','bk-phone','bk-email'].forEach(function(id){$id(id).addEventListener('input',function(){fErr(id,'');});});
+  $id('bk-agree').addEventListener('change',function(){$id('bk-agree-err').textContent='';});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=$id('bk-name').value.trim(), ph=phone.value.trim(), em=$id('bk-email').value.trim(), ok=true;
+    ok=fErr('bk-name',name.length<2?'성함을 2자 이상 입력해 주세요.':'')&&ok;
+    ok=fErr('bk-phone',!/^01[016789]-\d{3,4}-\d{4}$/.test(ph)?'휴대폰 번호를 정확히 입력해 주세요. (예: 010-1234-5678)':'')&&ok;
+    ok=fErr('bk-email',!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)?'이메일 주소 형식을 확인해 주세요.':'')&&ok;
+    if(!$id('bk-agree').checked){$id('bk-agree-err').textContent='개인정보 수집·이용에 동의해 주세요.';ok=false;}
+    if(!ok){var f=form.querySelector('[aria-invalid="true"]')||$id('bk-agree');f.focus();return;}
+    var btn=$id('bk-submit');btn.disabled=true;btn.classList.add('loading');btn.querySelector('b').textContent='예약 요청 중…';
+    setTimeout(function(){
+      var d=new Date(),code='';for(var i=0;i<4;i++)code+='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*32)];
+      BK.no='BLC-'+String(d.getFullYear()).slice(2)+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+code;
+      BK.name=name;BK.phone=ph;BK.email=em;BK.req=$id('bk-req').value.trim();
+      $id('bk-no').textContent=BK.no;
+      var rows=[['객실',BK.suite.nameKo+' · '+BK.bed.name],['일정',kday(BK.in)+' → '+kday(BK.out)+' ('+BK.nights+'박)'],['인원','성인 '+BK.guests+'명'],['예약자',name+' · '+ph],['이메일',em]];
+      if(BK.req)rows.push(['요청사항',BK.req]);
+      rows.push(['예상 요금',won(BK.total)+' (세금·봉사료 별도)']);
+      $id('bk-receipt').innerHTML=rows.map(function(r){return '<div><dt class="ko">'+r[0]+'</dt><dd class="ko">'+r[1].replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c]})+'</dd></div>'}).join('');
+      form.hidden=true;done.hidden=false;btn.disabled=false;btn.classList.remove('loading');btn.querySelector('b').textContent='예약 요청하기';
+      form.reset();done.querySelector('.bk-btn').focus();
+    },1400);
+  });
+  window.bkCopy=function(){var t='[벨루체 그랜드 호텔 예약 요청]\n예약번호: '+BK.no+'\n'+[].map.call(document.querySelectorAll('#bk-receipt div'),function(d){return d.querySelector('dt').textContent+': '+d.querySelector('dd').textContent}).join('\n');
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){var b=document.querySelector('.bk-btn2');b.textContent='복사했어요 ✓';setTimeout(function(){b.textContent='예약 내용 복사'},1600);}).catch(function(){});};
+})();
+</script>
+<style>
+/* ===== 데모 예약 UI ===== */
+.bk-err{margin:0;padding:12px 16px;border:1px solid rgba(224,122,95,.45);background:rgba(224,122,95,.08);color:#f2b8a6;font-size:13.5px;font-family:'Noto Serif KR',serif}
+#reserve .bk-bad{border-color:rgba(224,122,95,.75)!important}
+.bk-demo-note{margin-top:14px;text-align:center;font-family:Jost,sans-serif;font-size:10.5px;letter-spacing:.22em;color:rgba(201,169,106,.75)}
+#bk{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+#bk[hidden]{display:none}
+.bk-bg{position:absolute;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);opacity:0;transition:opacity .4s}
+.bk-panel{position:relative;width:100%;max-width:600px;max-height:calc(100vh - 40px);overflow-y:auto;background:#121110;border:1px solid rgba(201,169,106,.35);box-shadow:0 30px 120px rgba(0,0,0,.8);padding:40px 40px 30px;opacity:0;transform:translateY(24px) scale(.98);transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1);color:#f3ead8}
+#bk.on .bk-bg{opacity:1}#bk.on .bk-panel{opacity:1;transform:none}
+.bk-x{position:absolute;right:18px;top:18px;border:1px solid rgba(201,169,106,.3);background:transparent;color:#f3ead8;padding:8px 11px;cursor:pointer}.bk-x:hover{border-color:#c9a96a}
+.bk-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:22px;border-bottom:1px solid rgba(201,169,106,.2);padding-right:44px}
+.bk-eyebrow{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:#c9a96a}
+.bk-h{margin-top:10px;font-size:24px;font-weight:300;letter-spacing:.02em}
+.bk-step{font-size:30px;font-weight:300;color:rgba(230,207,157,.75)}.bk-step small{font-size:15px}
+.bk-sum{margin:22px 0;padding:16px 18px;border:1px solid rgba(201,169,106,.3);background:linear-gradient(135deg,rgba(201,169,106,.09),transparent);display:grid;gap:9px}
+.bk-sum div{display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+.bk-sum span{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:#c9a96a;flex:0 0 auto}
+.bk-sum b{font-weight:400;font-size:14.5px;text-align:right}
+.bk-sum .bk-total{margin-top:4px;padding-top:11px;border-top:1px solid rgba(201,169,106,.2)}
+.bk-sum .bk-total .en{font-size:24px;color:#f0d9a4;letter-spacing:.01em!important;font-family:'Cormorant Garamond',serif}.bk-sum small{display:block;font-size:12px;color:rgba(243,234,216,.65)}
+.bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bk-f{display:block;border:1px solid rgba(201,169,106,.2);background:rgba(0,0,0,.2);padding:13px 15px 10px;transition:border-color .3s}
+.bk-f:focus-within{border-color:rgba(201,169,106,.7)}.bk-f.bk-bad{border-color:rgba(224,122,95,.75)}
+.bk-wide{grid-column:1/-1}
+.bk-f>span{display:block;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:#c9a96a}
+.bk-f input,.bk-f textarea{width:100%;margin-top:7px;border:0;border-bottom:1px solid rgba(201,169,106,.25);background:transparent;color:#f3ead8;font-size:15px;padding:7px 0;outline:none;resize:vertical}
+.bk-f input::placeholder,.bk-f textarea::placeholder{color:rgba(243,234,216,.35)}
+.bk-f em,.bk-ferr{display:block;font-style:normal;font-size:12.5px;color:#f2b8a6;margin-top:6px;min-height:0}
+.bk-f em:empty,.bk-ferr:empty{display:none}
+.bk-agree{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:13.5px;color:rgba(243,234,216,.85);cursor:pointer}
+.bk-agree input{margin-top:3px;accent-color:#c9a96a;width:16px;height:16px}
+.bk-btn{margin-top:22px;width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:3px;border:1px solid #c9a96a;background:#c9a96a;color:#100e0b;padding:16px 22px;cursor:pointer;transition:background .3s,box-shadow .3s}
+.bk-btn:hover{background:#e6cf9d;box-shadow:0 0 35px rgba(201,169,106,.2)}
+.bk-btn span{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;opacity:.8}.bk-btn b{font-size:16px;font-weight:500;letter-spacing:.1em}
+.bk-btn.loading{opacity:.75;cursor:wait}.bk-btn.loading b::after{content:'';display:inline-block;width:14px;height:14px;margin-left:10px;vertical-align:-2px;border:2px solid rgba(16,14,11,.3);border-top-color:#100e0b;border-radius:50%;animation:bkspin .8s linear infinite}
+@keyframes bkspin{to{transform:rotate(360deg)}}
+.bk-check{width:64px;height:64px;margin:6px auto 18px;border:1px solid #c9a96a;border-radius:50%;display:grid;place-items:center;font-size:28px;color:#e6cf9d;animation:bkpop .6s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes bkpop{from{transform:scale(.6);opacity:0}}
+.bk-sub{text-align:center;margin-top:10px;font-size:14px;color:rgba(243,234,216,.75)}
+.bk-no{margin:24px 0 18px;padding:14px;text-align:center;border:1px dashed rgba(201,169,106,.45)}
+.bk-no span{display:block;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#c9a96a}.bk-no b{display:block;margin-top:6px;font-size:24px;font-weight:400;letter-spacing:.12em!important;color:#f0d9a4;font-family:Jost,sans-serif}
+.bk-receipt{display:grid;gap:0;border-top:1px solid rgba(201,169,106,.2)}
+.bk-receipt div{display:flex;justify-content:space-between;gap:16px;padding:11px 2px;border-bottom:1px solid rgba(201,169,106,.12)}
+.bk-receipt dt{flex:0 0 auto;font-size:13px;color:#c9a96a}.bk-receipt dd{font-size:14px;text-align:right;word-break:break-all}
+.bk-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
+.bk-actions .bk-btn{align-items:center;justify-content:center}.bk-actions>button{height:62px;margin-top:22px;padding-top:0;padding-bottom:0}
+.bk-btn2{margin-top:22px;border:1px solid rgba(201,169,106,.5);background:transparent;color:#e6cf9d;padding:16px 12px;cursor:pointer;font-size:14px;font-family:'Noto Serif KR',serif;transition:border-color .3s}.bk-btn2:hover{border-color:#c9a96a}
+@media (max-width:640px){#bk{padding:0;align-items:flex-end}.bk-panel{max-height:94vh;padding:28px 20px 22px;border-left:0;border-right:0;border-bottom:0}.bk-grid{grid-template-columns:1fr}.bk-h{font-size:21px}.bk-step{font-size:24px}.bk-sum b{font-size:13.5px}}
+</style>
 <footer class="border-t border-[#c9a96a]/10 bg-black py-16 text-center text-xs text-[#f3ead8]/40">
   <p class="en tracking-[0.3em]">BELLUCE GRAND HOTEL &amp; RESIDENCES</p>
   <p class="mt-2 ko font-light">경기도 양주시 프리미엄 에디션 | 대표 웹 개발 프로젝트</p>
